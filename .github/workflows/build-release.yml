@@ -95,7 +95,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: plugin
-            path: ${{ github.workspace }}/to-pack/$ESP_NAME.esp
+            path: ${{ github.workspace }}/to-pack/${{ env.ESP_NAME }}.esp
   compile-scripts:
     name: Compile Papyrus scripts
     needs: check-changes
@@ -220,13 +220,13 @@ jobs:
         uses: vimtor/action-zip@v1.2
         with:
           files: to-pack/
-          dest: $PROJECT_NAME-${{inputs.version || 'nightly'}}.zip
+          dest: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}.zip
 
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: $PROJECT_NAME-${{inputs.version || 'nightly'}}
-          path: $PROJECT_NAME-${{inputs.version || 'nightly'}}.zip
+          name: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}
+          path: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v4
@@ -248,7 +248,7 @@ jobs:
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: $PROJECT_NAME-${{inputs.version || 'nightly'}}
+          name: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}
 
       - name: Delete existing release
         uses: dev-drprasad/delete-tag-and-release@v1.0
@@ -266,16 +266,16 @@ jobs:
           allowUpdates: true
           name: ${{inputs.version || 'nightly'}}
           draft: false
-          body: 'Latest release of $PROJECT_NAME'
+          body: 'Latest release of ${{ env.PROJECT_NAME }}'
           tag: ${{inputs.version || 'nightly'}}
           prerelease: true
           makeLatest: false
           removeArtifacts: true
           replacesArtifacts: true
           artifactErrorsFailBuild: true
-          artifacts: $PROJECT_NAME-${{inputs.version || 'nightly'}}.zip
+          artifacts: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
         with:
-          name: $PROJECT_NAME-${{inputs.version || 'nightly'}}
+          name: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}
