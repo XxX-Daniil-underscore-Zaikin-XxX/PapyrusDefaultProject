@@ -1,0 +1,29 @@
+<?xml version='1.0'?><!-- Game is either sse, tesv, or fo4 -->
+<PapyrusProject xmlns="PapyrusProject.xsd" 
+    Flags="TESV_Papyrus_Flags.flg" 
+    Game="sse" 
+    Output="..\..\Scripts" 
+    Optimize="true"
+    Anonymize="true" 
+    Release="false" 
+    Final="false">
+    <Variables>
+        <!-- The folder this mod is located in -->
+        <Variable Name="modname" Value="PapyrusDefaultProject"/>
+        <!-- Path from root to your MO2 mods folder -->
+        <Variable Name="modspath" Value="D:\WabbajackModlists\ADF2\Modlist\mods"/>
+        <Variable Name="modpath" Value="."/>
+        <!-- Path to Skyrim installation -->
+        <Variable Name="gamepath" Value="E:\SteamLibrary\steamapps\common\Skyrim Special Edition"/>
+    </Variables>
+    <Imports>
+    
+        <Import>.</Import>
+        <!-- If you need to import script sources, put them somewhere in your modlist and do this:-->
+        <!-- <Import>@modspath\Dependency Mod\Scripts\source</Import> -->
+        <Import>@gamepath\Data\Scripts\Source</Import>
+    </Imports>
+    <Folders>
+        <Folder>.</Folder>
+    </Folders>
+</PapyrusProject>
