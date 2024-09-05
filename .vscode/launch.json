@@ -1,0 +1,13 @@
+{
+    // created by vscode papyrus-lang papyrus.skyrimSpecialEdition.generateProject
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Skyrim Special Edition/Anniversary Edition Project",
+            "type": "papyrus",
+            "request": "attach",
+            "game": "skyrimSpecialEdition",
+            "projectPath": "${workspaceFolder}/Source/Scripts/skyrimse.ppj"
+        }
+    ]
+}

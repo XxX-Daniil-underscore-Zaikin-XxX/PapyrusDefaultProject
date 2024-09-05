@@ -1,0 +1,55 @@
+{
+    // created by vscode papyrus-lang papyrus.skyrimSpecialEdition.generateProject
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "piss": "penis"
+        }
+    },
+    "tasks": [
+        {
+            "type": "pyro",
+            // path to your .ppj file
+            "projectFile": "Source\\Scripts\\skyrimse.ppj",
+            // path to your Skyrim installation
+            "gamePath": "${config:SKYRIM_PATH}",
+            // path to your Caprica compiler (you can find the most up-to-date version here: https://github.com/Orvid/Caprica/actions/runs/9566782007)
+            "compilerPath": "${config:CAPRICA_PATH}",
+            "problemMatcher": [
+                "$PapyrusCompiler"
+            ],
+            "label": "pyro: Compile Project (skyrimse.ppj)",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        // convert YAML files into the ESP
+        {
+            "label": "Spriggit: Deserialize project",
+            "type": "shell",
+            "command": "${config:SPRIGGIT_PATH} deserialize --InputPath 'ESP Patch' --OutputPath '${config:ESP_NAME}.esp'",
+            "group": "build"
+        },
+        // convert the ESP into YAML files
+        {
+            "label": "Spriggit: Serialize project",
+            "type": "shell",
+            "command": "${config:SPRIGGIT_PATH} serialize --InputPath '${config:ESP_NAME}.esp' --OutputPath 'ESP Patch' --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim",
+            "group": "build"
+        },
+        {
+            "label": "test shit",
+            "type": "shell",
+            "command": "echo ${config:CAPRICA_PATH}"
+        }//,
+        // lint ESP
+        // Currently disabled, but will get up and running once my ESPLinter project becomes set up properly (https://github.com/XxX-Daniil-underscore-Zaikin-XxX/ESPLinter)
+        // {
+        //     "label": "Lint ESP",
+        //     "type": "shell",
+        //     "command": "C:\\PATH\\TO\\ESPLinter.exe lint -i '${config:ESP_NAME}.esp' -o '${config:ESP_NAME}.esp'",
+        //     "group":"build"
+        // }
+    ]
+}

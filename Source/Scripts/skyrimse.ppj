@@ -8,10 +8,10 @@
     Release="false" 
     Final="false">
     <Variables>
-        <!-- The folder this mod is located in -->
+        <!-- The folder this mod is located in. You should change this! -->
         <Variable Name="modname" Value="PapyrusDefaultProject"/>
         <!-- Path from root to your MO2 mods folder -->
-        <Variable Name="modspath" Value="D:\WabbajackModlists\ADF2\Modlist\mods"/>
+        <Variable Name="modspath" Value="D:\PATH\TO\MO2\mods"/>
         <Variable Name="modpath" Value="."/>
         <!-- Path to Skyrim installation -->
         <Variable Name="gamepath" Value="E:\SteamLibrary\steamapps\common\Skyrim Special Edition"/>
