@@ -1,0 +1,14 @@
+FormKey: 000D61:HelloWorldMod.esp
+VersionControl: 12581
+EditorID: HelloModQuest
+VirtualMachineAdapter:
+  Scripts:
+  - Name: HelloModQuestScript
+  Versioning:
+  - Break0
+  ExtraBindDataVersion: 0
+  FileName: ''
+Flags:
+- StartGameEnabled
+- RunOnce
+NextAliasID: 0

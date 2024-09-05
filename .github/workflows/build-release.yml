@@ -1,0 +1,281 @@
+name: Build Release
+
+on:
+
+  # Run the nightly at midnight every night
+  schedule:
+    - cron: '0 0 * * *'
+
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Enable running this workflow manually
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (defaults to "Nightly")'
+        required: false
+      publish-release:
+        description: Publish Release?
+        type: boolean
+        default: true
+      spriggit_tool_version:
+        description: Spriggit version (optional)
+        required: false
+
+env:
+  ESP_NAME: MyCoolESP
+  PROJECT_NAME: MyCoolProject
+
+jobs:
+  check-changes:
+    name: Check for recent changes
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    outputs: 
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for changes last 24 hours
+        id: should_run
+        shell: bash
+        run: |
+          git log --since="1 days ago" --name-only
+          echo "should_run=$(git log --since="1 days ago" --name-only | grep "" -c)" >> "$GITHUB_OUTPUT"
+  build-plugin:
+    name: Build ESP from Spriggit files
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always()) }}
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Inputs
+        run: |
+          echo "GitHub Event Inputs: ${{ toJSON(github.event.inputs) }}"
+          echo "Inputs: ${{ toJSON(inputs) }}"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Copy to Pack Folder
+        shell: bash
+        run: mkdir ${{ github.workspace }}/to-pack
+
+      - name: Cache Spriggit
+        id: cache-spriggit
+        uses: actions/cache@v4
+        with:
+          path: |
+            .github/spriggit
+          key: ${{ runner.os }}-spriggit
+      
+      - name: Fetch spriggit
+        if: steps.cache-spriggit.outputs.cache-hit != 'true'
+        shell: bash
+        run: gh release download -O .github/spriggit.zip -p 'SpriggitLinuxCLI.zip' -R Mutagen-Modding/Spriggit ${{ inputs.spriggit_tool_version }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          
+      - name: Extract Spriggit Zip
+        if: steps.cache-spriggit.outputs.cache-hit != 'true'
+        shell: bash
+        run: 7z x .github/spriggit.zip -o.github/spriggit
+
+      - name: Fix spriggit permission
+        shell: bash
+        run: chmod +x .github/spriggit/Spriggit.CLI
+
+      - name: Run spriggit
+        shell: bash
+        run: .github/spriggit/Spriggit.CLI deserialize --InputPath "ESP Patch" --OutputPath "${{ github.workspace }}/to-pack/$ESP_NAME.esp"
+
+      - name: Upload plugin
+        uses: actions/upload-artifact@v4
+        with:
+            name: plugin
+            path: ${{ github.workspace }}/to-pack/$ESP_NAME.esp
+  compile-scripts:
+    name: Compile Papyrus scripts
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always()) }}
+    runs-on: windows-latest
+    steps: 
+        - name: Checkout repo scripts
+          uses: actions/checkout@v4
+          with:
+            sparse-checkout: Source/Scripts
+
+        - name: Cache Script Sources
+          id: cache-ss
+          uses: actions/cache@v4
+          with:
+            path: |
+              .github/Papyrus
+            key: script-sources-clean
+
+        - name: Cache Complier
+          id: cache-com
+          uses: actions/cache@v4
+          with:
+            path: |
+              .github/Caprica
+            key: ${{ runner.os }}-papyrus-compiler
+
+        - name: Fetch Caprica 0.3.0
+          if: steps.cache-com.outputs.cache-hit != 'true'
+          shell: bash
+          run: gh release download -O .github/Caprica.7z -p '*.7z' -R Orvid/Caprica v0.3.0
+          env:
+            GH_TOKEN: ${{ github.token }}
+
+        - name: Extract Caprica EXE file
+          if: steps.cache-com.outputs.cache-hit != 'true'
+          shell: bash
+          run: 7z x .github/Caprica.7z -o.github/Caprica
+
+        - name: Checkout Papyrus Sources
+          if: steps.cache-ss.outputs.cache-hit != 'true'
+          shell: bash
+          run: |
+            cd .github
+            mkdir Papyrus
+            cd Papyrus
+            git init
+            git remote add origin https://github.com/IHateMyKite/PAPYRUS.git
+            git sparse-checkout set --no-cone 'SRC'
+            git fetch --depth=1 origin main
+            git checkout main
+            rm -rf .git
+        
+        - name: Checkout TESV Flags File
+          if: steps.cache-ss.outputs.cache-hit != 'true'
+          shell: bash
+          run: |
+            cd .github
+            mkdir temp
+            cd temp
+            git init
+            git remote add origin https://github.com/Rukan/Grimy-Skyrim-Papyrus-Source.git
+            git sparse-checkout set --no-cone 'TESV_Papyrus_Flags.flg'
+            git fetch --depth=1 origin master
+            git checkout master
+            rm -rf .git
+            mv TESV_Papyrus_Flags.flg ../Papyrus/SRC/TESV_Papyrus_Flags.flg
+            cd ..
+            rm -r temp
+
+        # Perform the actions to build a release.
+        - name: Run Caprica
+          shell: bash
+          run: .github/Caprica/Caprica.exe --game skyrim --import ".github/Papyrus/SRC" --output "Scripts" --flags="TESV_Papyrus_Flags.flg" "Source/Scripts" -R -q
+        
+        - name: Upload Output
+          uses: actions/upload-artifact@v4
+          with: 
+            name: compiled-scripts
+            path: |
+              Scripts/
+  package-mod:
+    name: Package all necessary files
+    runs-on: ubuntu-latest
+    needs: [build-plugin, compile-scripts]
+    if: ${{ needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always()) }}
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Download Compiled Plugin
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin
+      
+      - name: Download Compiled Scripts
+        uses: actions/download-artifact@v4
+        with: 
+          name: compiled-scripts
+          path: Scripts
+
+      - name: Create packing structure
+        shell: bash
+        run: |
+          mkdir "${{ github.workspace }}/to-pack"
+          mkdir "${{ github.workspace }}/to-pack/1.Base"
+          mkdir "${{ github.workspace }}/to-pack/2.Scripts"
+          cp "$ESP_NAME.esp" "${{ github.workspace }}/to-pack/1.Base/$ESP_NAME.esp"
+          cp -a "Scripts" "${{ github.workspace }}/to-pack/1.Base/Scripts"
+          cp -a "Source" "${{ github.workspace }}/to-pack/2.Scripts/Source"
+          cp -a "FOMOD Files/fomod" "${{ github.workspace }}/to-pack/fomod"
+          cp -a "FOMOD Files/images" "${{ github.workspace }}/to-pack/images"
+          ls -R "${{ github.workspace }}/to-pack"
+      
+      - name: Edit info.xml
+        uses: Mudlet/xmlstarlet-action@master
+        with:
+          args: ed -L --update "/fomod/Version" -v ${{inputs.version || 'nightly'}} to-pack/fomod/info.xml
+
+      - name: Zip release files
+        uses: vimtor/action-zip@v1.2
+        with:
+          files: to-pack/
+          dest: $PROJECT_NAME-${{inputs.version || 'nightly'}}.zip
+
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: $PROJECT_NAME-${{inputs.version || 'nightly'}}
+          path: $PROJECT_NAME-${{inputs.version || 'nightly'}}.zip
+
+      - name: Remove temporary artifacts
+        uses: geekyeggo/delete-artifact@v4
+        with:
+          name: |
+            plugin
+            compiled-scripts
+  
+  share-release:
+    name: Share release
+    permissions: write-all
+    needs: [package-mod]
+    if: ${{ inputs.publish-release == true && (needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always())) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+  
+      - name: Download release artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: $PROJECT_NAME-${{inputs.version || 'nightly'}}
+
+      - name: Delete existing release
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: ${{inputs.version || 'nightly'}}
+          github_token: ${{ github.token }}
+          delete_release: true
+      
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1.13.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          allowUpdates: true
+          name: ${{inputs.version || 'nightly'}}
+          draft: false
+          body: 'Latest release of $PROJECT_NAME'
+          tag: ${{inputs.version || 'nightly'}}
+          prerelease: true
+          makeLatest: false
+          removeArtifacts: true
+          replacesArtifacts: true
+          artifactErrorsFailBuild: true
+          artifacts: $PROJECT_NAME-${{inputs.version || 'nightly'}}.zip
+
+      - name: Remove temporary artifacts
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: $PROJECT_NAME-${{inputs.version || 'nightly'}}
