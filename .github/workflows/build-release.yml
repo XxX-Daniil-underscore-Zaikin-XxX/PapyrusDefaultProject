@@ -2,9 +2,11 @@ name: Build Release
 
 on:
 
-  # Run the nightly at midnight every night
   schedule:
+    # Run the nightly at midnight every night if changes are detected
     - cron: '0 0 * * *'
+    # Release a weekly build regardless of changes
+    - cron: '0 0 * * 0'
 
   push:
     branches: [ "main" ]
@@ -35,15 +37,20 @@ jobs:
     if: ${{ github.event_name != 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     outputs: 
-      should_run: ${{ steps.should_run.outputs.should_run }}
+      should_run: ${{ steps.should_run_daily.outputs.should_run || steps.should_run_weekly.outputs.should_run}}
     steps:
       - uses: actions/checkout@v4
       - name: Check for changes last 24 hours
-        id: should_run
+        id: should_run_daily
         shell: bash
         run: |
           git log --since="1 days ago" --name-only
           echo "should_run=$(git log --since="1 days ago" --name-only | grep "" -c)" >> "$GITHUB_OUTPUT"
+      - name: Check if it's a weekly job
+        if: github.event.schedule == '0 0 * * 0'
+        id: should_run_weekly
+        shell: bash
+        run: echo "should_run=true" >> "$GITHUB_OUTPUT"
   build-plugin:
     name: Build ESP from Spriggit files
     needs: check-changes
