@@ -177,3 +177,21 @@ But for GitHub Actions, it's not that simple. Here's the rough procedure:
 5. Add all the required Papyrus-containing directories in each of the downloads to the `--import` option in the `Run Caprica` step.
 
 This may seem complicated, but I implore you to put in the time and effort. A project with functional CI (e.g. GitHub Actions) is magnitudes easier to develop for than one without.
+
+### FOMODs
+
+If you've ever been greeted with a pop-up window while you were installing your mod, that was likely the work of a FOMOD.
+
+FOMODs are probably too complicated and too unnecessary to go over in this guide, but I have included a sample FOMOD you can peruse and build upon. You can also have a look at `build-release.yml` to see a rough process for packaging a mod in FOMOD format.
+
+You can find out more about FOMODs [here](https://stepmodifications.org/wiki/Guide:FOMOD) and [here](https://fomod-docs.readthedocs.io/en/latest/tutorial.html). If you'd prefer a video, [this](https://www.youtube.com/watch?v=rr79YmimJW0) is a good one.
+
+## Summary
+
+And that's all you really need to know!
+
+So, to summarize your day-to-day workflow:
+ - Make all your changes to the `.esp` in `xEdit`, and always serialize it afterwards.
+ - Whenever you pull from the remote repository, deserialize.
+ - Save your Papyrus code often, compile it often, and commit it often.
+ - Whenever you add an external parent script to the `.ppj`, add it immediately to `build-release.yml`, regardless of how tedious it may seem.
