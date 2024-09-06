@@ -113,13 +113,15 @@ jobs:
           uses: actions/checkout@v4
           with:
             sparse-checkout: Source/Scripts
-
+        
+        # If you add more Papyrus sources, add them to path
         - name: Cache Script Sources
           id: cache-ss
           uses: actions/cache@v4
           with:
             path: |
               .github/Papyrus
+            # .github/AnotherPapyrusRepo
             key: script-sources-clean
 
         - name: Cache Complier
@@ -142,6 +144,7 @@ jobs:
           shell: bash
           run: 7z x .github/Caprica.7z -o.github/Caprica
 
+        # Repeat this process for every new papyrus source
         - name: Checkout Papyrus Sources
           if: steps.cache-ss.outputs.cache-hit != 'true'
           shell: bash
@@ -155,6 +158,22 @@ jobs:
             git fetch --depth=1 origin main
             git checkout main
             rm -rf .git
+
+        # Additional papyrus downloads would appear as follows:
+
+      # - name: Checkout More Papyrus Sources
+      #   if: steps.cache-ss.outputs.cache-hit != 'true'
+      #   shell: bash
+      #   run: |
+      #     cd .github
+#CHANGED -> mkdir AnotherPapyrusRepo
+#CHANGED -> cd AnotherPapyrusRepo
+      #     git init
+#CHANGED -> git remote add origin https://github.com/AnotherPapyrusRepo.git
+#CHANGED -> git sparse-checkout set --no-cone 'Path/To/Papyrus/Files'
+      #     git fetch --depth=1 origin main
+      #     git checkout main
+      #     rm -rf .git
         
         - name: Checkout TESV Flags File
           if: steps.cache-ss.outputs.cache-hit != 'true'
@@ -173,11 +192,12 @@ jobs:
             cd ..
             rm -r temp
 
-        # Perform the actions to build a release.
+        # If you add more Papyrus sources, change the --import to include their folders
         - name: Run Caprica
           shell: bash
           run: .github/Caprica/Caprica.exe --game skyrim --import ".github/Papyrus/SRC" --output "Scripts" --flags="TESV_Papyrus_Flags.flg" "Source/Scripts" -R -q
-        
+        # As an example:
+        # run: .github/Caprica/Caprica.exe --game skyrim --import ".github/Papyrus/SRC;.github/AnotherPapyrusRepo/Path/To/Papyrus/Files" --output "Scripts" --flags="TESV_Papyrus_Flags.flg" "Source/Scripts" -R -q
         - name: Upload Output
           uses: actions/upload-artifact@v4
           with: 

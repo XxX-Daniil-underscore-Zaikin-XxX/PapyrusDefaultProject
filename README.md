@@ -112,9 +112,11 @@ I suggest editing the .gitignore file to keep as much sensitive information (whi
 
 To the existing contents, add `*.ppj` on one line and `settings.json` on another.
 
-After that, that's it! You're ready to start working on your mod.
+And that's it! You're ready to start working on your mod.
 
-## VSCode Build Tasks
+## Extra Features
+
+### VSCode Build Tasks
 
 Since this project is intended for VSCode, we may as well use it to its full potential.
 
@@ -124,11 +126,9 @@ To get `tasks.json` working, we must first fill in `settings.json`. Change the `
 
 Currently, this project includes five tasks. You can run any of them through Quick Open (Ctrl+P), typing in 'task' (or clicking on Run Task), and choosing from the drop-down. Let's go over each one.
 
-### pyro: Compile Project
+#### pyro: Compile Project
 
 The task itself is quite simple. It passes the given values through to Pyro, which then uses Caprica as it sees fit. 
-
-### Spriggit
 
 #### Serialize project
 
@@ -150,6 +150,30 @@ All this does is sort Script Properties in the `.esp`. Without this, making chan
 
 This is run automatically when `Serialize project` is invoked.
 
-### Build All
+#### Build All
 
 This runs `pyro` and `Serialize project`.
+
+### GitHub Actions
+
+A nifty little script can be found in `.github\\workflows\\build-release.yml`. Its purpose is to automate building and publishing releases of this mod - every single time you commit a change, it outputs a completed, publishable package.
+
+Every night it also publishes such a package to your repository's [releases](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/releases). If you have some early-stage features you'd like people to test, it's super easy to share these nightly releases.
+
+You can read more about them [here](https://docs.github.com/en/actions)
+
+### VSCode Papyrus Extension
+
+This is a wonderful tool that drags Papyrus kicking and screaming into the age of modern IDEs. It's got autocomplete, error highlighting, and much more. You can even Ctrl-Click on symbols to view their definitions.
+
+It does come with a caveat: Papyrus, as you may know, requires all parent scripts to be present for compilation. If you use Creation Kit, this is a non-issue since your Mod Organizer will load all scripts from all your mods at once. In VSCode, however, you must tell the Papyrus extension exactly where to find every last script. On your local computer, this is as simple as adding lines to `Source\\Scripts\\skyrimse.ppj` to point to the folders which contain scripts you want to inherit from.
+
+But for GitHub Actions, it's not that simple. Here's the rough procedure:
+
+1. Find where you can download the parent scripts without an account. A `git` repository works best. *Note that these parent scripts do not have to be functional for your code to compile - they just need to have definitions for everything that's used in your code. You can check the included build script for an example.*
+2. For the scripts you can't find, use the [Papyrus Headliner](https://github.com/IHateMyKite/PapyrusSourceHeadliner) to remove their code, then put them into a separate repository. An example of such a repository can be found [here](https://github.com/IHateMyKite/PAPYRUS).
+3. Copy the `Checkout Papyrus Sources` build step for every new download in steps 1 and 2. `build-release.yml` should include a rough template to follow.
+4. Add all new downloads to the `Cache Script Sources` step.
+5. Add all the required Papyrus-containing directories in each of the downloads to the `--import` option in the `Run Caprica` step.
+
+This may seem complicated, but I implore you to put in the time and effort. A project with functional CI (e.g. GitHub Actions) is magnitudes easier to develop for than one without.
