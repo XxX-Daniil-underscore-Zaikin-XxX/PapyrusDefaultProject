@@ -1,11 +1,6 @@
 {
     // created by vscode papyrus-lang papyrus.skyrimSpecialEdition.generateProject
     "version": "2.0.0",
-    "options": {
-        "env": {
-            "piss": "penis"
-        }
-    },
     "tasks": [
         {
             "type": "pyro",
@@ -36,20 +31,20 @@
             "label": "Spriggit: Serialize project",
             "type": "shell",
             "command": "${config:SPRIGGIT_PATH} serialize --InputPath '${config:ESP_NAME}.esp' --OutputPath 'ESP Patch' --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim",
-            "group": "build"
+            "group": "build",
+            "dependsOn": ["Lint ESP"]
         },
+        // lint ESP using Spriggit
         {
-            "label": "test shit",
+            "label": "Lint ESP",
             "type": "shell",
-            "command": "echo ${config:CAPRICA_PATH}"
-        }//,
-        // lint ESP
-        // Currently disabled, but will get up and running once my ESPLinter project becomes set up properly (https://github.com/XxX-Daniil-underscore-Zaikin-XxX/ESPLinter)
-        // {
-        //     "label": "Lint ESP",
-        //     "type": "shell",
-        //     "command": "C:\\PATH\\TO\\ESPLinter.exe lint -i '${config:ESP_NAME}.esp' -o '${config:ESP_NAME}.esp'",
-        //     "group":"build"
-        // }
+            "command": "${config:SPRIGGIT_PATH} sort-script-properties -i '${config:ESP_NAME}.esp' -o '${config:ESP_NAME}.esp' --GameRelease SkyrimSE",
+            "group":"build"
+        },
+        // Serialize ESP and compile Papyrus
+        {
+            "label": "Build All",
+            "dependsOn": ["pyro: Compile Project (skyrimse.ppj)", "Spriggit: Serialize project"]
+        }
     ]
 }
