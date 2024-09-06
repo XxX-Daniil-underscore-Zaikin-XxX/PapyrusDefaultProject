@@ -1,6 +1,6 @@
 # Default Papyrus project
 
-placeholder for now
+The `HelloWorldMod` (from the wonderful [tutorial](https://www.youtube.com/watch?v=i2yLYdVOaLk) by [SkyrimScripting](https://www.youtube.com/@SkyrimScripting)) included in this project is nothing more than a placeholder. I would recommend deleting the `ESP Patch` folder and `HelloModQuestScript.psc` before you get started on your real project.
 
 ## VSCode Build Tasks
 
