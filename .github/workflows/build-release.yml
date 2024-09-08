@@ -28,7 +28,7 @@ on:
         required: false
 
 env:
-  ESP_NAME: MyCoolESP
+  ESP_NAME: HelloWorldMod
   PROJECT_NAME: MyCoolProject
 
 jobs:
