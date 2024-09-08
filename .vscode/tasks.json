@@ -23,14 +23,14 @@
         {
             "label": "Spriggit: Deserialize project",
             "type": "shell",
-            "command": "${config:SPRIGGIT_PATH} deserialize --InputPath 'ESP Patch' --OutputPath '${config:ESP_NAME}.esp'",
+            "command": "${config:SPRIGGIT_PATH} deserialize --InputPath '${config:ESP_NAME}' --OutputPath '${config:ESP_NAME}.esp'",
             "group": "build"
         },
         // convert the ESP into YAML files
         {
             "label": "Spriggit: Serialize project",
             "type": "shell",
-            "command": "${config:SPRIGGIT_PATH} serialize --InputPath '${config:ESP_NAME}.esp' --OutputPath 'ESP Patch' --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim",
+            "command": "${config:SPRIGGIT_PATH} serialize --InputPath '${config:ESP_NAME}.esp' --OutputPath '${config:ESP_NAME}' --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim",
             "group": "build",
             "dependsOn": ["Lint ESP"]
         },

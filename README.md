@@ -74,7 +74,7 @@ This will be more involved than the other installations. Now, the Papyrus extens
 
 First, download [this](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/pyro/actions/runs/10465455857/artifacts/1830685822) version of Pyro.
 
-Next, open your VSCode extension storage. You'll usually find it under Users\\YourUsername\\.vscode\\extensions (e.g. C:\\Users\\YourUsername\.vscode\extensions\\)
+Next, open your VSCode extension storage. You'll usually find it under Users\\YourUsername\\.vscode\\extensions (e.g. C:\\Users\\YourUsername\\.vscode\extensions\\)
 
 Finally, open `joelday.papyrus-lang-vscode-3.2.0` and replace the contents of the `pyro` folder with the contents of what you just downloaded.
 
@@ -84,27 +84,31 @@ Now that you've downloaded the dependencies, you can finally get started with th
 
 ### Initializing your repository
 
-I would recommend [forking](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) the [template repository](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject) and [cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) it into a local folder. You can also use the GitLens extension after forking the template to initialize a new repository, then - under Remotes - add your forked repository.
+I would highly recommend clicking `Use this template` in GitHub and [cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) it into a local folder.
 
-When all is said and done, you should have a fork of my template repository under your GitHub account and a copy on your local computer. 
+When all is said and done, you should have a fork of my template repository under your GitHub account and a copy on your local computer.
 
 Open it in VSCode. Check the Source Control tab to ensure you've initialized the repository (you can also run the command `git branch` on a terminal in the same directory), then go into the Papyrus tab. Ensure it's functional by descending the Skyrim SE/AE dropdowns until you find `HelloModQuestScript`.
 
 ### Deleting sample project
 
-Delete the `ESP Patch` folder and `Source\\Scripts\\HelloModQuestScript.psc`. Make sure `Source\\Scripts\\skyrimse.ppj` remains!
+Delete the `ESP Patch` folder and `Source\Scripts\HelloModQuestScript.psc`. Make sure `Source\Scripts\skyrimse.ppj` remains!
 
 ### Changing constants
 
 Before you begin, you must tell this project where to find all those tools you downloaded, as well as what it should call itself.
 
-Change the constants in `.vscode\\settings.json` as per the comments. The `NAME`s can be anything, but the `PATH`s must point to where you installed the corresponding tools.
+Change the constants in `.vscode\settings.json` as per the comments. The `NAME`s can be anything, but the `PATH`s must point to where you installed the corresponding tools.
 
-Your next stop is `Source\\Scripts\\skyrimse.ppj`. Change the `Variables` as per the comments. If you use a mod manager other than Mod Organizer 2, set `modspath` to point to that mod manager's modlist instead. If (i.e. when) your scripts pull from other script sources, add them to the `.ppj` in the same format as the comment between `<Import>.</Import>` and `<Import>@gamepath\Data\Scripts\Source</Import>`; keep in mind that scripts lower on the list get overwritten by those higher.
+Your next stop is `Source\Scripts\skyrimse.ppj`. Change the `Variables` as per the comments. If you use a mod manager other than Mod Organizer 2, set `modspath` to point to that mod manager's modlist instead. If (i.e. when) your scripts pull from other script sources, add them to the `.ppj` in the same format as the comment between `<Import>.</Import>` and `<Import>@gamepath\Data\Scripts\Source</Import>`; keep in mind that scripts lower on the list get overwritten by those higher.
 
-You can find more constants in `.github\\workflows\\build-release.yml`. Under `env`, change `ESP_NAME` to mirror `settings.json` and `PROJECT_NAME` to something similar to `settings.json` but without spaces.
+You can find more constants in `.github\workflows\build-release.yml`. Under `env`, change `ESP_NAME` to mirror `settings.json` and `PROJECT_NAME` to something similar to `settings.json` but without spaces.
 
 The `PROJECT_NAME` from `settings.json` should also go into `moduleName` in `FOMOD Files\fomod\ModuleConfig.xml` and `Name` in `FOMOD Files\fomod\info.xml`. As for the rest of `info.xml`, you can fill it in with whatever strikes your fancy.
+
+### Enable GitHub Actions
+
+You can do this by going into the Actions tab in GitHub and simply clicking Enable. Then, go into the Build Release action and enable it as well.
 
 ### Editing .gitignore
 
@@ -113,6 +117,10 @@ I suggest editing the .gitignore file to keep as much sensitive information (whi
 To the existing contents, add `*.ppj` on one line and `settings.json` on another.
 
 And that's it! You're ready to start working on your mod.
+
+### Updating git for new .gitignore
+
+Git will continue to track updates in the files you've gitignored till you sternly tell it to back off. You can do this by opening the VSCode Git Bash terminal and using the command `git rm -r --cached`.
 
 ## Extra Features
 
@@ -156,7 +164,7 @@ This runs `pyro` and `Serialize project`.
 
 ### GitHub Actions
 
-A nifty little script can be found in `.github\\workflows\\build-release.yml`. Its purpose is to automate building and publishing releases of this mod - every single time you commit a change, it outputs a completed, publishable package.
+A nifty little script can be found in `.github\workflows\build-release.yml`. Its purpose is to automate building and publishing releases of this mod - every single time you commit a change, it outputs a completed, publishable package.
 
 Every night it also publishes such a package to your repository's [releases](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/releases). If you have some early-stage features you'd like people to test, it's super easy to share these nightly releases.
 
@@ -166,7 +174,7 @@ You can read more about them [here](https://docs.github.com/en/actions)
 
 This is a wonderful tool that drags Papyrus kicking and screaming into the age of modern IDEs. It's got autocomplete, error highlighting, and much more. You can even Ctrl-Click on symbols to view their definitions.
 
-It does come with a caveat: Papyrus, as you may know, requires all parent scripts to be present for compilation. If you use Creation Kit, this is a non-issue since your Mod Organizer will load all scripts from all your mods at once. In VSCode, however, you must tell the Papyrus extension exactly where to find every last script. On your local computer, this is as simple as adding lines to `Source\\Scripts\\skyrimse.ppj` to point to the folders which contain scripts you want to inherit from.
+It does come with a caveat: Papyrus, as you may know, requires all parent scripts to be present for compilation. If you use Creation Kit, this is a non-issue since your Mod Organizer will load all scripts from all your mods at once. In VSCode, however, you must tell the Papyrus extension exactly where to find every last script. On your local computer, this is as simple as adding lines to `Source\Scripts\skyrimse.ppj` to point to the folders which contain scripts you want to inherit from.
 
 But for GitHub Actions, it's not that simple. Here's the rough procedure:
 

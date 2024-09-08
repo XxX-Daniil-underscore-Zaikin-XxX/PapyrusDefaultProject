@@ -96,7 +96,7 @@ jobs:
 
       - name: Run spriggit
         shell: bash
-        run: .github/spriggit/Spriggit.CLI deserialize --InputPath "ESP Patch" --OutputPath "${{ github.workspace }}/to-pack/$ESP_NAME.esp"
+        run: .github/spriggit/Spriggit.CLI deserialize --InputPath "$ESP_Name" --OutputPath "${{ github.workspace }}/to-pack/$ESP_NAME.esp"
 
       - name: Upload plugin
         uses: actions/upload-artifact@v4
