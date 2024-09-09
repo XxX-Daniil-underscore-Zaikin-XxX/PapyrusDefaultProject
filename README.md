@@ -2,7 +2,7 @@
 
 This is a handy template for a Skyrim mod with Papyrus scripts. To get started, install all the tools and dependencies, fork this repository, and clone it locally. For a more detailed guide, keep reading!
 
-The `HelloWorldMod` (from the wonderful [tutorial](https://www.youtube.com/watch?v=i2yLYdVOaLk) by [SkyrimScripting](https://www.youtube.com/@SkyrimScripting)) included in this project is nothing more than a placeholder. I would recommend deleting the `ESP Patch` folder and `HelloModQuestScript.psc` before you get started on your actual project.
+The `HelloWorldMod` (from the wonderful [tutorial](https://www.youtube.com/watch?v=i2yLYdVOaLk) by [SkyrimScripting](https://www.youtube.com/@SkyrimScripting)) included in this project is nothing more than a placeholder. I would recommend deleting the `HelloWorldMod` folder and `HelloModQuestScript.psc` before you get started on your actual project.
 
 ## Tools and Dependencies
 
@@ -92,7 +92,7 @@ Open it in VSCode. Check the Source Control tab to ensure you've initialized the
 
 ### Deleting sample project
 
-Delete the `ESP Patch` folder and `Source\Scripts\HelloModQuestScript.psc`. Make sure `Source\Scripts\skyrimse.ppj` remains!
+Delete the `HelloWorldMod` folder and `Source\Scripts\HelloModQuestScript.psc`. Make sure `Source\Scripts\skyrimse.ppj` remains!
 
 ### Changing constants
 
@@ -105,6 +105,10 @@ Your next stop is `Source\Scripts\skyrimse.ppj`. Change the `Variables` as per t
 You can find more constants in `.github\workflows\build-release.yml`. Under `env`, change `ESP_NAME` to mirror `settings.json` and `PROJECT_NAME` to something similar to `settings.json` but without spaces.
 
 The `PROJECT_NAME` from `settings.json` should also go into `moduleName` in `FOMOD Files\fomod\ModuleConfig.xml` and `Name` in `FOMOD Files\fomod\info.xml`. As for the rest of `info.xml`, you can fill it in with whatever strikes your fancy.
+
+### Update README
+
+Open `README.md` in your preferred text editor (you can even do this in GitHub itself) and replace it with a description of your mod. To refer back to this guide after you've deleted the `README`, go [here](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/blob/main/README.md).
 
 ### Enable GitHub Actions
 
@@ -140,7 +144,7 @@ The task itself is quite simple. It passes the given values through to Pyro, whi
 
 #### Serialize project
 
-This command converts the `.esp` into `.yaml` files under the `ESP Patch` folder. It also runs the `Lint ESP` command, which sorts some inconsistently serialised values.
+This command converts the `.esp` into `.yaml` files under the `HelloWorldMod` folder. It also runs the `Lint ESP` command, which sorts some inconsistently serialised values.
 
 You should run this command before you commit your code.
 
