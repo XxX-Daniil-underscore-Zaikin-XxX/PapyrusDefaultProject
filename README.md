@@ -124,7 +124,7 @@ And that's it! You're ready to start working on your mod.
 
 ### Updating git for new .gitignore
 
-Git will continue to track updates in the files you've gitignored till you sternly tell it to back off. You can do this by opening the VSCode Git Bash terminal and using the command `git rm -r --cached`.
+Git will continue to track updates in the files you've gitignored till you sternly tell it to back off. You can do this by opening the VSCode Git Bash terminal and using the command `git rm -r --cached .` (do not omit the dot at the end!).
 
 ## Extra Features
 
