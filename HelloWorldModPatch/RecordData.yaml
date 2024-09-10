@@ -4,11 +4,5 @@ SpriggitSource:
 ModKey: HelloWorldModPatch.esp
 GameRelease: SkyrimSE
 ModHeader:
-  Flags:
-  - Small
-  Stats:
-    Version: 1.7
-  Author: ''
-  MasterReferences:
-  - Master: HelloWorldMod.esp
-    FileSize: 0
+  Author: DEFAULT
+  INTV: 1

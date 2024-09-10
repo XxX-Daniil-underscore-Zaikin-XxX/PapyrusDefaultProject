@@ -1,5 +1,6 @@
-FormKey: 000D61:HelloWorldMod.esp
-EditorID: HelloModQuestPatched
+FormKey: 000D61:HelloWorldModPatch.esp
+VersionControl: 12581
+EditorID: HelloModQuestPatchedAndScripted
 VirtualMachineAdapter:
   Scripts:
   - Name: HelloModQuestScript
