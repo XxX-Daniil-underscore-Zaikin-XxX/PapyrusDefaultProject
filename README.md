@@ -2,7 +2,7 @@
 
 This is a handy template for a Skyrim mod with Papyrus scripts. To get started, install all the tools and dependencies, fork this repository, and clone it locally. For a more detailed guide, keep reading!
 
-The `HelloWorldMod` (from the wonderful [tutorial](https://www.youtube.com/watch?v=i2yLYdVOaLk) by [SkyrimScripting](https://www.youtube.com/@SkyrimScripting)) included in this project is nothing more than a placeholder. I would recommend deleting the `ESP Patch` folder and `HelloModQuestScript.psc` before you get started on your actual project.
+The `HelloWorldMod` (from the wonderful [tutorial](https://www.youtube.com/watch?v=i2yLYdVOaLk) by [SkyrimScripting](https://www.youtube.com/@SkyrimScripting)) included in this project is nothing more than a placeholder. I would recommend deleting the serialized folders (`HelloWorldMod` and `HelloWorldModPatch`) and `HelloModQuestScript.psc` before you get started on your actual project.
 
 ## Tools and Dependencies
 
@@ -82,7 +82,7 @@ Finally, open `joelday.papyrus-lang-vscode-3.2.0` and replace the contents of th
 
 Now that you've downloaded the dependencies, you can finally get started with this template.
 
-### Initializing your repository
+### Initialise your repository
 
 I would highly recommend clicking `Use this template` in GitHub and [cloning](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) it into a local folder.
 
@@ -90,11 +90,15 @@ When all is said and done, you should have a fork of my template repository unde
 
 Open it in VSCode. Check the Source Control tab to ensure you've initialized the repository (you can also run the command `git branch` on a terminal in the same directory), then go into the Papyrus tab. Ensure it's functional by descending the Skyrim SE/AE dropdowns until you find `HelloModQuestScript`.
 
-### Deleting sample project
+### Delete sample project
 
-Delete the `ESP Patch` folder and `Source\Scripts\HelloModQuestScript.psc`. Make sure `Source\Scripts\skyrimse.ppj` remains!
+Delete the `HelloWorldMod` and `HelloWorldModPatch` folders and `Source\Scripts\HelloModQuestScript.psc`. Make sure `Source\Scripts\skyrimse.ppj` remains!
 
-### Changing constants
+### Prepare VSCode
+
+Before you run any tasks, you want to change your default shell to Git Bash. You can find the instructions [here](https://stackoverflow.com/questions/44435697/change-the-default-terminal-in-visual-studio-code).
+
+### Change constants
 
 Before you begin, you must tell this project where to find all those tools you downloaded, as well as what it should call itself.
 
@@ -102,7 +106,7 @@ Change the constants in `.vscode\settings.json` as per the comments. The `NAME`s
 
 Your next stop is `Source\Scripts\skyrimse.ppj`. Change the `Variables` as per the comments. If you use a mod manager other than Mod Organizer 2, set `modspath` to point to that mod manager's modlist instead. If (i.e. when) your scripts pull from other script sources, add them to the `.ppj` in the same format as the comment between `<Import>.</Import>` and `<Import>@gamepath\Data\Scripts\Source</Import>`; keep in mind that scripts lower on the list get overwritten by those higher.
 
-You can find more constants in `.github\workflows\build-release.yml`. Under `env`, change `ESP_NAME` to mirror `settings.json` and `PROJECT_NAME` to something similar to `settings.json` but without spaces.
+You can find more constants in `.github\workflows\build-release.yml`. Under `env`, change `ESP_NAMES` to mirror `settings.json` (although formatted differently) and `PROJECT_NAME` to something similar to `settings.json` but without spaces.
 
 The `PROJECT_NAME` from `settings.json` should also go into `moduleName` in `FOMOD Files\fomod\ModuleConfig.xml` and `Name` in `FOMOD Files\fomod\info.xml`. As for the rest of `info.xml`, you can fill it in with whatever strikes your fancy.
 
@@ -110,7 +114,7 @@ The `PROJECT_NAME` from `settings.json` should also go into `moduleName` in `FOM
 
 You can do this by going into the Actions tab in GitHub and simply clicking Enable. Then, go into the Build Release action and enable it as well.
 
-### Editing .gitignore
+### Edit .gitignore
 
 I suggest editing the .gitignore file to keep as much sensitive information (which unfortunately includes your installation paths) away from prying eyes as possible.
 
@@ -118,7 +122,7 @@ To the existing contents, add `*.ppj` on one line and `settings.json` on another
 
 And that's it! You're ready to start working on your mod.
 
-### Updating git for new .gitignore
+### Update git for new .gitignore
 
 Git will continue to track updates in the files you've gitignored till you sternly tell it to back off. You can do this by opening the VSCode Git Bash terminal and using the command `git rm -r --cached`.
 
@@ -140,7 +144,7 @@ The task itself is quite simple. It passes the given values through to Pyro, whi
 
 #### Serialize project
 
-This command converts the `.esp` into `.yaml` files under the `ESP Patch` folder. It also runs the `Lint ESP` command, which sorts some inconsistently serialised values.
+This command converts the `.esp` files into `.yaml` files under the corresponding folders (named after the `.esp`). It also runs the `Lint ESP` command, which sorts some inconsistently serialised values.
 
 You should run this command before you commit your code.
 
@@ -160,7 +164,7 @@ This is run automatically when `Serialize project` is invoked.
 
 #### Build All
 
-This runs `pyro` and `Serialize project`.
+This runs `pyro` and `Serialize project`. This is the default build task - you can run it with `Ctrl+Shift+B`.
 
 ### GitHub Actions
 
