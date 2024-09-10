@@ -56,11 +56,11 @@ jobs:
       - name: Get version
         id: get-version
         shell: bash
-        run: echo "VERSION=${{ inputs.version || (github.event_name == 'push' || github.event_name == 'pull_request') && format('{0}-{1}', env.BRANCH_NAME, steps.get-hash.outputs.sha_short) || format('nightly-{0}', steps.get-date.outputs.time) }}" >> "$GITHUB_OUTPUT"
+        run: echo "VERSION=${{ inputs.version || (github.event_name == 'push' || github.event_name == 'pull_request') && format('{0}.{1}', env.BRANCH_NAME, steps.get-hash.outputs.sha_short) || format('nightly-{0}', steps.get-date.outputs.time) }}" >> "$GITHUB_OUTPUT"
       - name: Set release name
         id: set-release
         shell: bash
-        run: echo "rel-name=${{ format('${0}-${1}', env.PROJECT_NAME, steps.get-version.outputs.VERSION)}}" >> "$GITHUB_OUTPUT"
+        run: echo "rel-name=${{ format('{0}-{1}', env.PROJECT_NAME, steps.get-version.outputs.VERSION)}}" >> "$GITHUB_OUTPUT"
   check-changes:
     name: Check for recent changes
     if: ${{ github.event_name != 'workflow_dispatch' }}
