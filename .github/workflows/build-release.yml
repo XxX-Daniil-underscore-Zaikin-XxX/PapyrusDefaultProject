@@ -28,10 +28,38 @@ on:
         required: false
 
 env:
-  ESP_NAME: HelloWorldMod
+  # If you must compile more .esp files, add them in the following format
+  ESP_NAMES: ("HelloWorldMod" "HelloWorldModPatch")
   PROJECT_NAME: MyCoolProject
+  # Do not edit
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
+  get-version:
+    name: Get date and version
+    runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.get-date.outputs.time }}
+      version: ${{ steps.get-version.outputs.VERSION }}
+      release-name: ${{ steps.set-release.outputs.rel-name }}
+    steps:
+      - name: Get Date
+        id: get-date
+        uses: Kaven-Universe/github-action-current-date-time@v1
+        with:
+          format: "YYYY-MM-DD"
+      - name: Get short hash
+        id: get-hash
+        shell: bash
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Get version
+        id: get-version
+        shell: bash
+        run: echo "VERSION=${{ inputs.version || (github.event_name == 'push' || github.event_name == 'pull_request') && format('{0} ({1})', env.BRANCH_NAME, steps.get-hash.outputs.sha_short) || format('nightly-{0}', steps.get-date.outputs.time) }}" >> "$GITHUB_OUTPUT"
+      - name: Set release name
+        id: set-release
+        shell: bash
+        run: echo "rel-name=${{ format('${0}-${1}', env.PROJECT_NAME, steps.get-version.outputs.VERSION)}}" >> "$GITHUB_OUTPUT"
   check-changes:
     name: Check for recent changes
     if: ${{ github.event_name != 'workflow_dispatch' }}
@@ -96,13 +124,18 @@ jobs:
 
       - name: Run spriggit
         shell: bash
-        run: .github/spriggit/Spriggit.CLI deserialize --InputPath "$ESP_NAME" --OutputPath "${{ github.workspace }}/to-pack/$ESP_NAME.esp"
+        run: |
+          esps=${{ env.ESP_NAMES }}
+          for esp in ${esps[@]}
+          do
+            .github/spriggit/Spriggit.CLI deserialize --InputPath "$esp" --OutputPath "${{ github.workspace }}/to-pack/$esp.esp"
+          done
 
       - name: Upload plugin
         uses: actions/upload-artifact@v4
         with:
             name: plugin
-            path: ${{ github.workspace }}/to-pack/${{ env.ESP_NAME }}.esp
+            path: ${{ github.workspace }}/to-pack/*
   compile-scripts:
     name: Compile Papyrus scripts
     needs: check-changes
@@ -207,7 +240,7 @@ jobs:
   package-mod:
     name: Package all necessary files
     runs-on: ubuntu-latest
-    needs: [build-plugin, compile-scripts]
+    needs: [build-plugin, compile-scripts, get-version]
     if: ${{ needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always()) }}
     permissions: write-all
     steps:
@@ -225,15 +258,19 @@ jobs:
           name: compiled-scripts
           path: Scripts
 
+      # Change the folder names and locations as desired
       - name: Create packing structure
         shell: bash
         run: |
+          esps=${{ env.ESP_NAMES }}
           mkdir "${{ github.workspace }}/to-pack"
-          mkdir "${{ github.workspace }}/to-pack/1.Base"
-          mkdir "${{ github.workspace }}/to-pack/2.Scripts"
-          cp "$ESP_NAME.esp" "${{ github.workspace }}/to-pack/1.Base/$ESP_NAME.esp"
-          cp -a "Scripts" "${{ github.workspace }}/to-pack/1.Base/Scripts"
-          cp -a "Source" "${{ github.workspace }}/to-pack/2.Scripts/Source"
+          mkdir "${{ github.workspace }}/to-pack/000 Required - Core Files"
+          mkdir "${{ github.workspace }}/to-pack/100 Optional - Example Patch"
+          mkdir "${{ github.workspace }}/to-pack/200 Optional - Script Sources"
+          cp "${esps[0]}.esp" "${{ github.workspace }}/to-pack/000 Required - Core Files/${esps[0]}.esp"
+          cp "${esps[1]}.esp" "${{ github.workspace }}/to-pack/100 Optional - Example Patch/${esps[1]}.esp"
+          cp -a "Scripts" "${{ github.workspace }}/to-pack/000 Required - Core Files/Scripts"
+          cp -a "Source" "${{ github.workspace }}/to-pack/200 Optional - Script Sources/Source"
           cp -a "FOMOD Files/fomod" "${{ github.workspace }}/to-pack/fomod"
           cp -a "FOMOD Files/images" "${{ github.workspace }}/to-pack/images"
           ls -R "${{ github.workspace }}/to-pack"
@@ -241,19 +278,19 @@ jobs:
       - name: Edit info.xml
         uses: Mudlet/xmlstarlet-action@master
         with:
-          args: ed -L --update "/fomod/Version" -v ${{inputs.version || 'nightly'}} to-pack/fomod/info.xml
+          args: ed -L --update "/fomod/Version" -v ${{ needs.get-version.outputs.version }} to-pack/fomod/info.xml
 
       - name: Zip release files
         uses: vimtor/action-zip@v1.2
         with:
           files: to-pack/
-          dest: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}.zip
+          dest: ${{ needs.get-version.outputs.release-name }}.zip
 
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}
-          path: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}.zip
+          name: ${{ needs.get-version.outputs.release-name }}
+          path: ${{ needs.get-version.outputs.release-name }}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v4
@@ -265,7 +302,7 @@ jobs:
   share-release:
     name: Share release
     permissions: write-all
-    needs: [package-mod]
+    needs: [package-mod, get-version]
     if: ${{ inputs.publish-release == true && (needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always())) }}
     runs-on: ubuntu-latest
     steps:
@@ -275,12 +312,12 @@ jobs:
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}
+          name: ${{ needs.get-version.outputs.release-name }}
 
       - name: Delete existing release
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
-          tag_name: ${{inputs.version || 'nightly'}}
+          tag_name: ${{ needs.get-version.outputs.version }}
           github_token: ${{ github.token }}
           delete_release: true
       
@@ -291,18 +328,18 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           allowUpdates: true
-          name: ${{inputs.version || 'nightly'}}
+          name: ${{ needs.get-version.outputs.version }}
           draft: false
           body: 'Latest release of ${{ env.PROJECT_NAME }}'
-          tag: ${{inputs.version || 'nightly'}}
+          tag: ${{ needs.get-version.outputs.version }}
           prerelease: true
           makeLatest: false
           removeArtifacts: true
           replacesArtifacts: true
           artifactErrorsFailBuild: true
-          artifacts: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}.zip
+          artifacts: ${{ needs.get-version.outputs.release-name }}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
         with:
-          name: ${{ env.PROJECT_NAME }}-${{inputs.version || 'nightly'}}
+          name: ${{ needs.get-version.outputs.release-name }}

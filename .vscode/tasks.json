@@ -14,37 +14,56 @@
                 "$PapyrusCompiler"
             ],
             "label": "pyro: Compile Project (skyrimse.ppj)",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build"
+            },
+            "group": "build"
         },
         // convert YAML files into the ESP
         {
             "label": "Spriggit: Deserialize project",
             "type": "shell",
-            "command": "${config:SPRIGGIT_PATH} deserialize --InputPath '${config:ESP_NAME}' --OutputPath '${config:ESP_NAME}.esp'",
-            "group": "build"
+            "command": "for esp in $(echo ${config:ESP_NAMES} | tr ',' '\n') ; do ${config:SPRIGGIT_PATH} deserialize --InputPath \"$esp\" --OutputPath \"$esp.esp\"; done",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build"
+            }
         },
         // convert the ESP into YAML files
         {
             "label": "Spriggit: Serialize project",
             "type": "shell",
-            "command": "${config:SPRIGGIT_PATH} serialize --InputPath '${config:ESP_NAME}.esp' --OutputPath '${config:ESP_NAME}' --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim",
-            "group": "build",
+            "command": "for esp in $(echo ${config:ESP_NAMES} | tr ',' '\n') ; do ${config:SPRIGGIT_PATH} serialize --InputPath \"$esp.esp\" --OutputPath \"$esp\" --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim ; done",
+            "group": "none",
             "dependsOn": ["Lint ESP"]
         },
         // lint ESP using Spriggit
         {
             "label": "Lint ESP",
             "type": "shell",
-            "command": "${config:SPRIGGIT_PATH} sort-script-properties -i '${config:ESP_NAME}.esp' -o '${config:ESP_NAME}.esp' --GameRelease SkyrimSE",
-            "group":"build"
+            "command": "for esp in $(echo ${config:ESP_NAMES} | tr ',' '\n'); do ${config:SPRIGGIT_PATH} sort-script-properties -i \"$esp.esp\" -o \"$esp.esp\" --GameRelease SkyrimSE ; done",
+            "group":"none"
         },
         // Serialize ESP and compile Papyrus
         {
             "label": "Build All",
-            "dependsOn": ["pyro: Compile Project (skyrimse.ppj)", "Spriggit: Serialize project"]
+            "dependsOn": ["pyro: Compile Project (skyrimse.ppj)", "Spriggit: Deserialize project"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
