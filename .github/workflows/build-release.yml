@@ -281,17 +281,11 @@ jobs:
         with:
           args: ed -L --update "/fomod/Version" -v ${{ needs.get-version.outputs.version }} to-pack/fomod/info.xml
 
-      - name: Zip release files
-        uses: vimtor/action-zip@v1.2
-        with:
-          files: to-pack/
-          dest: ${{ needs.get-version.outputs.release-name }}.zip
-
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
           name: ${{ needs.get-version.outputs.release-name }}
-          path: ${{ needs.get-version.outputs.release-name }}.zip
+          path: to-pack/*
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v4
