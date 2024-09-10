@@ -110,6 +110,10 @@ You can find more constants in `.github\workflows\build-release.yml`. Under `env
 
 The `PROJECT_NAME` from `settings.json` should also go into `moduleName` in `FOMOD Files\fomod\ModuleConfig.xml` and `Name` in `FOMOD Files\fomod\info.xml`. As for the rest of `info.xml`, you can fill it in with whatever strikes your fancy.
 
+### Update README
+
+Open `README.md` in your preferred text editor (you can even do this in GitHub itself) and replace it with a description of your mod. To refer back to this guide after you've deleted the `README`, go [here](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/blob/main/README.md).
+
 ### Enable GitHub Actions
 
 You can do this by going into the Actions tab in GitHub and simply clicking Enable. Then, go into the Build Release action and enable it as well.
@@ -124,7 +128,7 @@ And that's it! You're ready to start working on your mod.
 
 ### Update git for new .gitignore
 
-Git will continue to track updates in the files you've gitignored till you sternly tell it to back off. You can do this by opening the VSCode Git Bash terminal and using the command `git rm -r --cached`.
+Git will continue to track updates in the files you've gitignored till you sternly tell it to back off. You can do this by opening the VSCode Git Bash terminal and using the command `git rm -r --cached .` (do not omit the dot at the end!).
 
 ## Extra Features
 
