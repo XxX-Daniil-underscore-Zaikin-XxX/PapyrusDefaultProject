@@ -8,6 +8,19 @@
             "request": "attach",
             "game": "skyrimSpecialEdition",
             "projectPath": "${workspaceFolder}/Source/Scripts/skyrimse.ppj"
+        },
+        {
+            "name": ".NET Script Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "dotnet",
+            "args": [
+                "exec",
+                "${config:DOTNETSCRIPT_PATH}",
+                "${file}"
+            ],
+            "cwd": "${workspaceRoot}",
+            "stopAtEntry": false
         }
     ]
 }

@@ -1,0 +1,9 @@
+{
+  "script": {
+    "enableScriptNuGetReferences": true,
+    "defaultTargetFramework": "net8.0"
+  },
+  "msbuild": {
+    "EnablePackageAutoRestore": true
+  }
+}

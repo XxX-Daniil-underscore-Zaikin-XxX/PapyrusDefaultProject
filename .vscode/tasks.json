@@ -47,16 +47,26 @@
             "type": "shell",
             "command": "for esp in $(echo ${config:ESP_NAMES} | tr ',' '\n') ; do ${config:SPRIGGIT_PATH} serialize --InputPath \"$esp.esp\" --OutputPath \"$esp\" --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim ; done",
             "group": "none",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build"
+            },
             "dependsOn": ["Lint ESP"]
         },
         // lint ESP using Spriggit
         {
             "label": "Lint ESP",
+            "dependsOn": ["Run Mutagen scripts"],
             "type": "shell",
             "command": "for esp in $(echo ${config:ESP_NAMES} | tr ',' '\n'); do ${config:SPRIGGIT_PATH} sort-script-properties -i \"$esp.esp\" -o \"$esp.esp\" --GameRelease SkyrimSE ; done",
             "group":"none"
         },
-        // Serialize ESP and compile Papyrus
+        // Deserialize ESP and compile Papyrus
         {
             "label": "Build All",
             "dependsOn": ["pyro: Compile Project (skyrimse.ppj)", "Spriggit: Deserialize project"],
@@ -64,6 +74,18 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        // Compile papyrus (to catch compile errors), serialize esp
+        {
+            "label": "Prepare Sources",
+            "dependsOn": ["pyro: Compile Project (skyrimse.ppj)", "Spriggit: Serialize project"]
+        },
+        // Run scripts. We do this every time we serialize.
+        {
+            "label": "Run Mutagen scripts",
+            "type": "shell",
+            "command": "dotnet script main.csx",
+            "problemMatcher": "$msCompile"
         }
     ]
 }

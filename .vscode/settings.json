@@ -5,9 +5,14 @@
     // Name of your project
     "PROJECT_NAME": "My Cool Project",
     // path to your Caprica compiler (you can find the most up-to-date version here: https://github.com/Orvid/Caprica/actions/runs/9566782007)
-    "CAPRICA_PATH": "D:\\PATH\\TO\\Caprica.exe",
+    "CAPRICA_PATH": "D:/PATH/TO/Caprica.exe",
     // path to your Skyrim installation
-    "SKYRIM_PATH": "E:\\SteamLibrary\\steamapps\\common\\Skyrim Special Edition\\",
+    "SKYRIM_PATH": "E:/SteamLibrary/steamapps/common/Skyrim Special Edition/",
     // path to the Spriggit CLI
-    "SPRIGGIT_PATH": "C:\\PATH\\TO\\Spriggit.CLI.exe"
+    "SPRIGGIT_PATH": "C:/PATH/TO/Spriggit.CLI.exe",
+    "DOTNETSCRIPT_PATH": "C:/PATH/TO/dotnet-script.dll",
+    "dotnet.server.useOmnisharp": true,
+    "files.exclude": {
+     "**/.git": false
+}
 }
