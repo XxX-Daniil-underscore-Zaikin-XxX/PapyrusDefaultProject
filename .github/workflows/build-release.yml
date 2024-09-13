@@ -326,6 +326,10 @@ jobs:
           tag_name: ${{ needs.get-version.outputs.version }}
           github_token: ${{ github.token }}
           delete_release: true
+
+      - name: Zip release
+        shell: bash
+        run: "zip -r ${{ needs.get-version.outputs.release-name }}.zip ${{ needs.get-version.outputs.release-name }}"
       
       - name: Create Release
         id: create_release
@@ -343,7 +347,7 @@ jobs:
           removeArtifacts: true
           replacesArtifacts: true
           artifactErrorsFailBuild: true
-          artifacts: ${{ needs.get-version.outputs.release-name }}
+          artifacts: ${{ needs.get-version.outputs.release-name }}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
