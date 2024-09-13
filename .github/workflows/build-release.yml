@@ -329,7 +329,7 @@ jobs:
 
       - name: Zip release
         shell: bash
-        run: "zip -r ${{ needs.get-version.outputs.release-name }}.zip ${{ needs.get-version.outputs.release-name }}"
+        run: "zip -r ${{ needs.get-version.outputs.release-name }}.zip ${{ needs.get-version.outputs.release-name }}/"
       
       - name: Create Release
         id: create_release
