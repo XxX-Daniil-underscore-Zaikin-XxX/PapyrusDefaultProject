@@ -345,7 +345,7 @@ jobs:
           name: ${{ env.VERSION }}
           draft: false
           body: 'Latest release of ${{ env.PROJECT_NAME }}'
-          tag: ${{ env.VERSION }}
+          tag: ${{ needs.get-version.outputs.version }}
           prerelease: true
           makeLatest: false
           removeArtifacts: true
