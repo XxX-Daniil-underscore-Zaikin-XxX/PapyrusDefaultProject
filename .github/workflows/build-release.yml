@@ -314,22 +314,25 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - shell: bash
+        run: echo "VERSION=${{ needs.get-version.outputs.release-name }}" >> $GITHUB_ENV
   
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ needs.get-version.outputs.release-name }}
+          name: ${{ env.VERSION }}
 
       - name: Delete existing release
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
-          tag_name: ${{ needs.get-version.outputs.version }}
+          tag_name: ${{ env.VERSION }}
           github_token: ${{ github.token }}
           delete_release: true
 
       - name: Zip release
         shell: bash
-        run: "zip -r ${{ needs.get-version.outputs.release-name }}.zip ${{ needs.get-version.outputs.release-name }}/"
+        run: "zip -r ${{ env.VERSION }} ${{ env.VERSION }}"
       
       - name: Create Release
         id: create_release
@@ -338,18 +341,18 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           allowUpdates: true
-          name: ${{ needs.get-version.outputs.version }}
+          name: ${{ env.VERSION }}
           draft: false
           body: 'Latest release of ${{ env.PROJECT_NAME }}'
-          tag: ${{ needs.get-version.outputs.version }}
+          tag: ${{ env.VERSION }}
           prerelease: true
           makeLatest: false
           removeArtifacts: true
           replacesArtifacts: true
           artifactErrorsFailBuild: true
-          artifacts: ${{ needs.get-version.outputs.release-name }}.zip
+          artifacts: ${{ env.VERSION }}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
         with:
-          name: ${{ needs.get-version.outputs.release-name }}
+          name: ${{ env.VERSION }}
