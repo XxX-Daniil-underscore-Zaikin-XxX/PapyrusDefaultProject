@@ -343,7 +343,7 @@ jobs:
           removeArtifacts: true
           replacesArtifacts: true
           artifactErrorsFailBuild: true
-          artifacts: ${{ needs.get-version.outputs.release-name }}.zip
+          artifacts: ${{ needs.get-version.outputs.release-name }}
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
