@@ -299,7 +299,10 @@ jobs:
     permissions: write-all
     needs: [check-changes, package-mod, get-version]
     if: >
-        github.event_name == 'schedule' ||
+        (
+          github.event_name == 'schedule' &&
+          needs.check-changes.outputs.should_run >= 1
+        ) ||
         (
           inputs.publish-release == true && 
           (
