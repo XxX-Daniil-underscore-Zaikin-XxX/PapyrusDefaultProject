@@ -148,14 +148,12 @@ jobs:
           with:
             sparse-checkout: Source/Scripts
         
-        # If you add more Papyrus sources, add them to path
         - name: Cache Script Sources
           id: cache-ss
           uses: actions/cache@v4
           with:
             path: |
               .github/Pyro/remote
-            # .github/AnotherPapyrusRepo
             key: script-sources-clean
 
         - name: Cache Complier
@@ -191,6 +189,7 @@ jobs:
           shell: bash
           run: |
             gh run download -R XxX-Daniil-underscore-Zaikin-XxX/pyro
+            echo ls
             mv .github/pyro* .github/Pyro
           env:
             GH_TOKEN: ${{ github.token }}
