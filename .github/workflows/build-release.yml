@@ -30,6 +30,8 @@ on:
 env:
   # If you must compile more .esp files, add them in the following format
   ESP_NAMES: ("HelloWorldMod" "HelloWorldModPatch")
+  # The name of the game you're making the mod for - identical to the game's folder
+  GAME: "Skyrim Special Edition"
   PROJECT_NAME: MyCoolProject
   # Do not edit
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -42,25 +44,37 @@ jobs:
       date: ${{ steps.get-date.outputs.time }}
       version: ${{ steps.get-version.outputs.VERSION }}
       release-name: ${{ steps.set-release.outputs.rel-name }}
+      trimmed-release-name: ${{ steps.set-trimmed-release.outputs.trim-rel-name }}
     steps:
+
       - uses: actions/checkout@v4
+
       - name: Get Date
         id: get-date
         uses: Kaven-Universe/github-action-current-date-time@v1
         with:
           format: "YYYY-MM-DD"
+
       - name: Get short hash
         id: get-hash
         shell: bash
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        
       - name: Get version
         id: get-version
         shell: bash
         run: echo "VERSION=${{ inputs.version || (github.event_name == 'push' || github.event_name == 'pull_request') && format('{0}.{1}', env.BRANCH_NAME, steps.get-hash.outputs.sha_short) || format('nightly-{0}', steps.get-date.outputs.time) }}" >> "$GITHUB_OUTPUT"
+
       - name: Set release name
         id: set-release
         shell: bash
         run: echo "rel-name=${{ format('{0}-{1}', env.PROJECT_NAME, steps.get-version.outputs.VERSION)}}" >> "$GITHUB_OUTPUT"
+
+      - name: Set trimmed release name
+        id: set-trimmed-release
+        shell: bash
+        run: echo "trim-rel-name=$(echo ${{ steps.set-release.outputs.rel-name }} | tr -d /)" >> "$GITHUB_OUTPUT"
+
   check-changes:
     name: Check for recent changes
     if: ${{ github.event_name != 'workflow_dispatch' }}
@@ -148,14 +162,12 @@ jobs:
           with:
             sparse-checkout: Source/Scripts
         
-        # If you add more Papyrus sources, add them to path
         - name: Cache Script Sources
           id: cache-ss
           uses: actions/cache@v4
           with:
             path: |
-              .github/Papyrus
-            # .github/AnotherPapyrusRepo
+              .github/Pyro/remote
             key: script-sources-clean
 
         - name: Cache Complier
@@ -165,6 +177,14 @@ jobs:
             path: |
               .github/Caprica
             key: ${{ runner.os }}-papyrus-compiler
+
+        - name: Cache Pyro
+          id: cache-pyro
+          uses: actions/cache@v4
+          with:
+            path: |
+              .github/Pyro
+            key: ${{ runner.os }}-pyro
 
         - name: Fetch Caprica 0.3.0
           if: steps.cache-com.outputs.cache-hit != 'true'
@@ -176,62 +196,25 @@ jobs:
         - name: Extract Caprica EXE file
           if: steps.cache-com.outputs.cache-hit != 'true'
           shell: bash
-          run: 7z x .github/Caprica.7z -o.github/Caprica
+          run: 7z x .github/Caprica.7z -o .github/Caprica
 
-        # Repeat this process for every new papyrus source
-        - name: Checkout Papyrus Sources
-          if: steps.cache-ss.outputs.cache-hit != 'true'
+        - name: Fetch latest Pyro
+          if: steps.cache-pyro.outputs.cache-hit != 'true'
+          shell: bash
+          # temporarily download Pyro from run instead of release
+          run: |
+            gh run download 10850094629 -R XxX-Daniil-underscore-Zaikin-XxX/pyro
+            mv pyro* Pyro
+            ls -aR
+          env:
+            GH_TOKEN: ${{ github.token }}
+
+        - name: Run Pyro
           shell: bash
           run: |
-            cd .github
-            mkdir Papyrus
-            cd Papyrus
-            git init
-            git remote add origin https://github.com/IHateMyKite/PAPYRUS.git
-            git sparse-checkout set --no-cone 'SRC'
-            git fetch --depth=1 origin main
-            git checkout main
-            rm -rf .git
+            mkdir -p "dummyGame/${{ env.GAME }}"
+            Pyro/pyro.exe --compiler-path "${{ github.workspace}}/.github/Caprica/Caprica.exe" --access-token ${{ github.token }} --game-path "${{ github.workspace}}/dummyGame/${{ env.GAME }}" "${{ github.workspace}}/Source/Scripts/skyrimse.ppj"
 
-        # Additional papyrus downloads would appear as follows:
-
-      # - name: Checkout More Papyrus Sources
-      #   if: steps.cache-ss.outputs.cache-hit != 'true'
-      #   shell: bash
-      #   run: |
-      #     cd .github
-#CHANGED -> mkdir AnotherPapyrusRepo
-#CHANGED -> cd AnotherPapyrusRepo
-      #     git init
-#CHANGED -> git remote add origin https://github.com/AnotherPapyrusRepo.git
-#CHANGED -> git sparse-checkout set --no-cone 'Path/To/Papyrus/Files'
-      #     git fetch --depth=1 origin main
-      #     git checkout main
-      #     rm -rf .git
-        
-        - name: Checkout TESV Flags File
-          if: steps.cache-ss.outputs.cache-hit != 'true'
-          shell: bash
-          run: |
-            cd .github
-            mkdir temp
-            cd temp
-            git init
-            git remote add origin https://github.com/Rukan/Grimy-Skyrim-Papyrus-Source.git
-            git sparse-checkout set --no-cone 'TESV_Papyrus_Flags.flg'
-            git fetch --depth=1 origin master
-            git checkout master
-            rm -rf .git
-            mv TESV_Papyrus_Flags.flg ../Papyrus/SRC/TESV_Papyrus_Flags.flg
-            cd ..
-            rm -r temp
-
-        # If you add more Papyrus sources, change the --import to include their folders
-        - name: Run Caprica
-          shell: bash
-          run: .github/Caprica/Caprica.exe --game skyrim --import ".github/Papyrus/SRC" --output "Scripts" --flags="TESV_Papyrus_Flags.flg" "Source/Scripts" -R -q
-        # As an example:
-        # run: .github/Caprica/Caprica.exe --game skyrim --import ".github/Papyrus/SRC;.github/AnotherPapyrusRepo/Path/To/Papyrus/Files" --output "Scripts" --flags="TESV_Papyrus_Flags.flg" "Source/Scripts" -R -q
         - name: Upload Output
           uses: actions/upload-artifact@v4
           with: 
@@ -284,7 +267,7 @@ jobs:
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ needs.get-version.outputs.release-name }}
+          name: ${{ needs.get-version.outputs.trimmed-release-name }}
           path: to-pack/*
 
       - name: Remove temporary artifacts
@@ -319,13 +302,15 @@ jobs:
         uses: actions/checkout@v4
 
       - shell: bash
-        run: echo "VERSION=${{ needs.get-version.outputs.release-name }}" >> $GITHUB_ENV
+        run: |
+          echo "VERSION=${{ needs.get-version.outputs.release-name }}" >> $GITHUB_ENV
+          echo "TRIMMED_VERSION=${{ needs.get-version.outputs.trimmed-release-name }}" >> $GITHUB_ENV
   
       - name: Download release artifact
         uses: actions/download-artifact@v4
         with:
-          path: ${{ env.VERSION }}
-          name: ${{ env.VERSION }}
+          path: ${{ env.TRIMMED_VERSION }}
+          name: ${{ env.TRIMMED_VERSION }}
 
       - name: Delete existing release
         uses: dev-drprasad/delete-tag-and-release@v1.0
@@ -336,7 +321,7 @@ jobs:
 
       - name: Zip release
         shell: bash
-        run: "zip -r ${{ env.VERSION }}.zip ${{ env.VERSION }}"
+        run: "zip -r ${{ env.TRIMMED_VERSION }}.zip ${{ env.TRIMMED_VERSION }}"
       
       - name: Create Release
         id: create_release
@@ -354,9 +339,9 @@ jobs:
           removeArtifacts: true
           replacesArtifacts: true
           artifactErrorsFailBuild: true
-          artifacts: ${{ env.VERSION }}.zip
+          artifacts: ${{ env.TRIMMED_VERSION }}.zip
 
       - name: Remove temporary artifacts
         uses: geekyeggo/delete-artifact@v2
         with:
-          name: ${{ env.VERSION }}
+          name: ${{ env.TRIMMED_VERSION }}
