@@ -201,7 +201,7 @@ jobs:
           shell: bash
           run: |
             mkdir -p dummyGame/${{ env.GAME }}
-            Pyro/pyro.exe --input-path Source/Scripts/skyrimse.ppj --compiler-path .github/Caprica/Caprica.exe --access-token ${{ github.token }} --game-path dummyGame/${{ env.GAME }}
+            Pyro/pyro.exe input-path Source/Scripts/skyrimse.ppj --compiler-path .github/Caprica/Caprica.exe --access-token ${{ github.token }} --game-path dummyGame/${{ env.GAME }}
 
         - name: Upload Output
           uses: actions/upload-artifact@v4
