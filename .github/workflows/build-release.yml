@@ -30,6 +30,8 @@ on:
 env:
   # If you must compile more .esp files, add them in the following format
   ESP_NAMES: ("HelloWorldMod" "HelloWorldModPatch")
+  # The name of the game you're making the mod for - identical to the game's folder
+  GAME: "Skyrim Special Edition"
   PROJECT_NAME: MyCoolProject
   # Do not edit
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -198,7 +200,8 @@ jobs:
         - name: Run Pyro
           shell: bash
           run: |
-            Pyro/pyro.exe --input-path Source/Scripts/skyrimse.ppj --compiler-path .github/Caprica/Caprica.exe --access-token ${{ github.token }}
+            mkdir -p dummyGame/${{ env.GAME }}
+            Pyro/pyro.exe --input-path Source/Scripts/skyrimse.ppj --compiler-path .github/Caprica/Caprica.exe --access-token ${{ github.token }} --game-path dummyGame/${{ env.GAME }}
 
         - name: Upload Output
           uses: actions/upload-artifact@v4
