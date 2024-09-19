@@ -19,9 +19,14 @@
     <Imports>
     
         <Import>.</Import>
-        <!-- If you need to import script sources, put them somewhere in your modlist and do this:-->
+        <!-- If you need to import script sources from a folder, put them somewhere in your modlist and do this:-->
         <!-- <Import>@modspath\Dependency Mod\Scripts\source</Import> -->
         <Import>@gamepath\Data\Scripts\Source</Import>
+
+        <!-- If you instead prefer to use Git remotes (highly recommended), just link to the scripts folder in the repo:-->
+        <Import>https://github.com/MrOctopus/nl_online/tree/main/sse/source</Import>
+        <!-- Here is another example: -->
+        <!-- <Import>https://github.com/fireundubh/skyui/tree/master/dist/Data/Scripts/Source</Import> -->
     </Imports>
     <Folders>
         <Folder>.</Folder>
