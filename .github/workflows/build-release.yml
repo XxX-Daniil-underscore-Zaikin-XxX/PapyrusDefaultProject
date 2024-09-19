@@ -198,7 +198,7 @@ jobs:
         - name: Run Pyro
           shell: bash
           run: |
-            .github/Pyro/Pyro.exe --input-path Source/Scripts/skyrimse.ppj --compiler-path .github/Caprica/Caprica.exe --access-token ${{ github.token }}
+            Pyro/pyro.exe --input-path Source/Scripts/skyrimse.ppj --compiler-path .github/Caprica/Caprica.exe --access-token ${{ github.token }}
 
         - name: Upload Output
           uses: actions/upload-artifact@v4
