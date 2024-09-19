@@ -187,10 +187,11 @@ jobs:
         - name: Fetch latest Pyro
           if: steps.cache-pyro.outputs.cache-hit != 'true'
           shell: bash
+          # temporarily download Pyro from run instead of release
           run: |
-            gh run download -R XxX-Daniil-underscore-Zaikin-XxX/pyro
-            ls
-            mv .github/pyro* .github/Pyro
+            gh run download 10850094629 -R XxX-Daniil-underscore-Zaikin-XxX/pyro
+            mv pyro* Pyro
+            tree
           env:
             GH_TOKEN: ${{ github.token }}
 
