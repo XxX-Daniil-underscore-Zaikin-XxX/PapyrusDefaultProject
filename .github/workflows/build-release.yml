@@ -189,7 +189,7 @@ jobs:
           shell: bash
           run: |
             gh run download -R XxX-Daniil-underscore-Zaikin-XxX/pyro
-            echo ls
+            ls
             mv .github/pyro* .github/Pyro
           env:
             GH_TOKEN: ${{ github.token }}
