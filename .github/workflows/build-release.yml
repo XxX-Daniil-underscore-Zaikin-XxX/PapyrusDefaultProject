@@ -193,7 +193,7 @@ jobs:
           run: |
             gh run download 10850094629 -R XxX-Daniil-underscore-Zaikin-XxX/pyro
             mv pyro* Pyro
-            ls -R
+            ls -aR
           env:
             GH_TOKEN: ${{ github.token }}
 
