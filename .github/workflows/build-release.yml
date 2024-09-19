@@ -184,7 +184,7 @@ jobs:
         - name: Extract Caprica EXE file
           if: steps.cache-com.outputs.cache-hit != 'true'
           shell: bash
-          run: 7z x .github/Caprica.7z -o Caprica
+          run: 7z x .github/Caprica.7z -o .github/Caprica
 
         - name: Fetch latest Pyro
           if: steps.cache-pyro.outputs.cache-hit != 'true'
@@ -201,7 +201,7 @@ jobs:
           shell: bash
           run: |
             mkdir -p "dummyGame/${{ env.GAME }}"
-            Pyro/pyro.exe --compiler-path ${{ github.workspace}}/Caprica/Caprica.exe --access-token ${{ github.token }} --game-path "${{ github.workspace}}/dummyGame/${{ env.GAME }}" "${{ github.workspace}}/Source/Scripts/skyrimse.ppj"
+            Pyro/pyro.exe --compiler-path ${{ github.workspace}}/.github/Caprica/Caprica.exe --access-token ${{ github.token }} --game-path "${{ github.workspace}}/dummyGame/${{ env.GAME }}" "${{ github.workspace}}/Source/Scripts/skyrimse.ppj"
 
         - name: Upload Output
           uses: actions/upload-artifact@v4
