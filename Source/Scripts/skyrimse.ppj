@@ -14,14 +14,14 @@
         <Variable Name="modspath" Value="D:\PATH\TO\MO2\mods"/>
         <Variable Name="modpath" Value="."/>
         <!-- Path to Skyrim installation -->
-        <Variable Name="gamepath" Value="E:\SteamLibrary\steamapps\common\Skyrim Special Edition"/>
+        <!-- <Variable Name="gamepath" Value="E:\SteamLibrary\steamapps\common\Skyrim Special Edition"/> -->
     </Variables>
     <Imports>
     
         <Import>.</Import>
         <!-- If you need to import script sources from a folder, put them somewhere in your modlist and do this:-->
         <!-- <Import>@modspath\Dependency Mod\Scripts\source</Import> -->
-        <Import>@gamepath\Data\Scripts\Source</Import>
+        <!-- <Import>@gamepath\Data\Scripts\Source</Import> -->
 
         <!-- If you instead prefer to use Git remotes (highly recommended), just link to the scripts folder in the repo:-->
         <Import>https://github.com/MrOctopus/nl_online/tree/main/sse/source</Import>
