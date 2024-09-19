@@ -73,7 +73,7 @@ jobs:
       - name: Set trimmed release name
         id: set-trimmed-release
         shell: bash
-        run: echo "trim-rel-name=\"$(echo ${{ steps.set-release.outputs.rel-name }} | tr -d /)\"" >> "$GITHUB_OUTPUT"
+        run: echo "trim-rel-name=$(echo ${{ steps.set-release.outputs.rel-name }} | tr -d /)" >> "$GITHUB_OUTPUT"
 
   check-changes:
     name: Check for recent changes
