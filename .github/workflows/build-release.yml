@@ -186,17 +186,12 @@ jobs:
               .github/Pyro
             key: ${{ runner.os }}-pyro
 
-        - name: Fetch Caprica 0.3.0
+        - name: Fetch Caprica Prerelease
           if: steps.cache-com.outputs.cache-hit != 'true'
           shell: bash
-          run: gh release download -O .github/Caprica.7z -p '*.7z' -R Orvid/Caprica v0.3.0
+          run: gh run download 10848769493 -R Orvid/Caprica
           env:
             GH_TOKEN: ${{ github.token }}
-
-        - name: Extract Caprica EXE file
-          if: steps.cache-com.outputs.cache-hit != 'true'
-          shell: bash
-          run: 7z x .github/Caprica.7z -o .github/Caprica
 
         - name: Fetch latest Pyro
           if: steps.cache-pyro.outputs.cache-hit != 'true'
