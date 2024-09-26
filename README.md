@@ -78,17 +78,44 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 <summary>Screenshots</summary>
 <br>
 
-|                               GitHub Actions                                    |                                 Automated Releases                                  |
-| :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
-| <img src="docs/images/vellum-gha.png" title="GitHub Actions runs" width="100%"> | <img src="docs/images/vellum-releases.png" title="Automated releases" width="100%"> |
-
-|                               Pyro Remote Imports                                        |                                    Prebuilt VSCode Tasks                               |
-| :--------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
-| <img src="docs/images/vellum-remoteimport.png" title="Pyro Remote Imports" width="100%"> | <img src="docs/images/vellum-vscodetasks.png" title="Automated releases" width="100%"> |
-
-|                               Automatic FOMOD                                              |                                    Spriggified ESP                                     |
-| :----------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
-| <img src="docs/images/vellum-automatedfomod.png" title="Pyro Remote Imports" width="100%"> | <img src="docs/images/vellum-spriggified.png" title="Automated releases" width="100%"> |
+<table width=100% style='table-layout:fixed;'>
+  <tr>
+    <th style='text-align:center;'> GitHub Actions </th>
+    <th style='text-align:center;'> Automated Releases </th>
+  </tr>
+  <tr>
+    <td style='text-align:center;'>
+        <img src="docs/images/vellum-gha.png" title="GitHub Actions runs" width="100%">
+    </td>
+    <td style='text-align:center;'>
+        <img src="docs/images/vellum-releases.png" title="Automated releases" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <th style='text-align:center;'>Pyro Remote Imports</th>
+    <th style='text-align:center;'>Prebuilt VSCode Tasks</th>
+  </tr>
+  <tr>
+    <td style='text-align:center;'>
+        <img src="docs/images/vellum-remoteimport.png" title="Pyro Remote Imports" width="100%">
+    </td>
+    <td style='text-align:center;'>
+        <img src="docs/images/vellum-vscodetasks.png" title="Automated releases" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <th style='text-align:center;'>Automatic FOMOD</th>
+    <th style='text-align:center;'>Spriggified ESP</th>
+  </tr>
+  <tr>
+    <td style='text-align:center;'>
+        <img src="docs/images/vellum-automatedfomod.png" title="Pyro Remote Imports" width="100%">
+    </td>
+    <td style='text-align:center;'>
+        <img src="docs/images/vellum-spriggified.png" title="Automated releases" width="100%">
+    </td>
+  </tr>
+</table>
 
 </details>
 
@@ -143,7 +170,7 @@ To use this template properly, you must have:
 > [!NOTE]
 > You don't necessarily have to follow the below steps to craft your documentation. You can radically adjust this template as you see fit, or simply remake it from scratch.
 >
-> You may find it helpful to look at [this curated list of cool READMEs](https://github.com/matiassingers/awesome-readme), [this amazing template generator](https://github.com/dec0dOS/amazing-github-template), and [this video about designing a good README](https://www.youtube.com/watch?v=vfZuFo1gTB8&list=PLA9_Hq3zhoFw6patag2gZcDjpugDLBStL&index=33).
+> You may find it helpful to consult [this curated list of cool READMEs](https://github.com/matiassingers/awesome-readme), [this amazing template generator](https://github.com/dec0dOS/amazing-github-template), and [this video about designing a good README](https://www.youtube.com/watch?v=vfZuFo1gTB8&list=PLA9_Hq3zhoFw6patag2gZcDjpugDLBStL&index=33).
 - [ ] Update documentation
    - [ ] Change all repository URLs. You should search and replace the whole repository, not just the README
    - [ ] Change my name and GH profile
