@@ -317,6 +317,15 @@ jobs:
       - name: Zip release
         shell: bash
         run: "zip -r ${{ env.TRIMMED_VERSION }}.zip ${{ env.TRIMMED_VERSION }}"
+
+      - name: Generate release notes
+        id: release-notes
+        uses: mikepenz/release-changelog-builder-action@develop
+        with:
+          ignorePreReleases: "true"
+          configuration: ".github/workflows/release_notes_configuration"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Create Release
         id: create_release
@@ -327,7 +336,7 @@ jobs:
           allowUpdates: true
           name: ${{ env.VERSION }}
           draft: false
-          body: 'Latest release of ${{ env.PROJECT_NAME }}'
+          body: ${{ steps.release-notes.outputs.changelog }}
           tag: ${{ needs.get-version.outputs.version }}
           prerelease: true
           makeLatest: false
