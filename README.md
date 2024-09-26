@@ -43,7 +43,6 @@
 <summary>Table of Contents</summary>
 
 - [About](#about)
-  - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -90,14 +89,17 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 
 </td></tr></table>
 
-### Built With
-<!-- TODO: FORMAT THIS BETTER -->
- - Caprica
- - Pyro
- - papyrus-lang
- - Spriggit
- - Mutagen
- - [amazing-github-template](https://github.com/dec0dOS/amazing-github-template)
+<h3 style="text-align:center;">Built With</h3>
+<p style="text-align:center;">
+<a href=""></a>
+✒️<a href="https://github.com/joelday/papyrus-lang">papyrus-lang</a>✒️<br>
+✒️<a href="https://code.visualstudio.com/">Visual Studio Code</a>✒️<br>
+🔧<a href="https://github.com/Orvid/Caprica">Caprica</a>🔧<br>
+🔧<a href="https://github.com/fireundubh/pyro">Pyro</a>🔧<br>
+🔧<a href="https://github.com/Mutagen-Modding/Spriggit">Spriggit</a>🔧<br>
+🔧<a href="https://github.com/Mutagen-Modding/Mutagen">Mutagen</a>🔧<br>
+📖<a href="https://github.com/dec0dOS/amazing-github-template">amazing-github-template</a>📖<br>
+</p>
 
 ## Getting Started
 
@@ -107,15 +109,14 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 > For more information, check out [the wiki page on dependencies](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/wiki/Tools-and-Dependencies).
 
 
-<!-- TODO: FORMAT THIS BETTER -->
 To use this template properly, you must have:
- - The prerelease build of Caprica
- - The prerelease build of Pyro
- - The latest build of Spriggit
- - The prerelease build of papyrus-lang
- - git
- - VSCode
- - dotnet script (optional)
+ - The [prerelease build](https://github.com/Orvid/Caprica/actions/runs/10979332233/artifacts/1962822238) of [Caprica](https://github.com/Orvid/Caprica)
+ - The [prerelease build](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/papyrus-lang/releases/tag/temp-release) of the [VSCode Papyrus extension](https://github.com/joelday/papyrus-lang)
+ - The [prerelease build](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/pyro/actions/runs/10973209974/artifacts/1961711654) of [Pyro](https://github.com/fireundubh/pyro) to replace the one in the extension's directory
+ - A GitHub account and a [git installation](https://git-scm.com/downloads)
+ - The [latest build](https://github.com/Mutagen-Modding/Spriggit/releases) of [Spriggit](https://github.com/Mutagen-Modding/Spriggit)
+ - [Visual Studio Code](https://code.visualstudio.com/) and some basic extensions
+ - [dotnet script](https://github.com/dotnet-script/dotnet-script) and its dependencies (optional)
 
 ### Installation
 
@@ -175,7 +176,7 @@ Before you commit any code, make sure to run the `Prepare Sources` task. It's al
 ### Creating a new release
 > [!IMPORTANT]
 > Consider using [semantic versioning](https://www.gitkraken.com/gitkon/semantic-versioning-git-tags) (e.g. `v1.3.1`) to name your release versions. It's standard industry practice for many good reasons.
-<!-- TODO: ADD SCREENSHOT OF THIS -->
+
 Automated builds let you make releases quickly and often, and it's always a good idea to make your most recent changes as accessible as possible. You can generate a release through GitHub Actions:
 
 1. In the Actions tab, select the `Build Release` workflow in the left pane
@@ -239,10 +240,12 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-<!-- TODO: FORMAT LINKS -->
-<!-- TODO: ADD MORE PEOPLE -->
-
 This would not have been possible without:
 
- - [dec0dOS](https://github.com/dec0dOS), for making an [amazing-github-template](https://github.com/dec0dOS/amazing-github-template)
- - Noggog, for creating the inspiration of this template in the starfield build script
+ - 🏅[dec0dOS](https://github.com/dec0dOS), for making an 💎[amazing-github-template](https://github.com/dec0dOS/amazing-github-template)
+ - 🏅[Pickysaurus](https://github.com/Pickysaurus), for creating the inspiration of this template in the 💎[Starfield build script](https://github.com/Starfield-Community-Patch/Starfield-Community-Patch/blob/main/.github/workflows/build-release.yml)
+ - 🏅[joelday](https://github.com/joelday), for his years of work on the slick 💎[VSCode papyrus-lang](https://github.com/joelday/papyrus-lang) extension, not to mention 🏅[everyone else](https://github.com/joelday/papyrus-lang?tab=readme-ov-file#-credits)
+ - 🏅[nikitalita](https://github.com/nikitalita) and 🏅[Orvid](https://github.com/Orvid) for making the impossible possible with 💎[Caprica](https://github.com/Orvid/Caprica)
+ - 🏅[fireundubh](https://github.com/fireundubh) for forcing the future into the present with 💎[Pyro](https://github.com/fireundubh/pyro)
+ - 🏅[sanjaysai](https://seeklogo.com/user/sanjaysai) for the cool, simple, and free 💎[logo](https://seeklogo.com/vector-logo/335319/bat)
+ - 🏅[Noggog](https://github.com/Noggog), for the indescribably useful 💎[Spriggit](https://github.com/Mutagen-Modding/Spriggit) and 💎[Mutagen](https://github.com/Mutagen-Modding/Mutagen)
