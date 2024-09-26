@@ -1,7 +1,7 @@
 <h1 align="center">
   <a href="https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject">
     <!-- Please provide path to your logo here -->
-    <img src="docs/images/bat-seeklogo.svg" alt="Logo: silhouette of a bat with yellow outline" width="200" height="150">
+    <img src="docs/images/bat-seeklogo.svg" alt="Logo: silhouette of a bat with yellow outline" width="400" height="300">
   </a>
 </h1>
 
@@ -78,12 +78,17 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 <summary>Screenshots</summary>
 <br>
 
-> **[?]**
-> Please provide your screenshots here.
+|                               GitHub Actions                                    |                                 Automated Releases                                  |
+| :-----------------------------------------------------------------------------: | :---------------------------------------------------------------------------------: |
+| <img src="docs/images/vellum-gha.png" title="GitHub Actions runs" width="100%"> | <img src="docs/images/vellum-releases.png" title="Automated releases" width="100%"> |
 
-|                               Home Page                               |                               Login Page                               |
-| :-------------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| <img src="docs/images/screenshot.png" title="Home Page" width="100%"> | <img src="docs/images/screenshot.png" title="Login Page" width="100%"> |
+|                               Pyro Remote Imports                                        |                                    Prebuilt VSCode Tasks                               |
+| :--------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| <img src="docs/images/vellum-remoteimport.png" title="Pyro Remote Imports" width="100%"> | <img src="docs/images/vellum-vscodetasks.png" title="Automated releases" width="100%"> |
+
+|                               Automatic FOMOD                                              |                                    Spriggified ESP                                     |
+| :----------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------: |
+| <img src="docs/images/vellum-automatedfomod.png" title="Pyro Remote Imports" width="100%"> | <img src="docs/images/vellum-spriggified.png" title="Automated releases" width="100%"> |
 
 </details>
 
