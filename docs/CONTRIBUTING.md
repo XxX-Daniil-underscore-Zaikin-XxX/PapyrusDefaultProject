@@ -5,21 +5,17 @@ Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in
 
 ## Development environment setup
 
-> **[?]**
-> Proceed to describe how to setup local development environment.
-> e.g:
-
-<!-- TODO: COPY DEV ENVIRONMENT SETUP -->
-
 To set up a development environment, please follow these steps:
 
-1. Clone the repo
-
+1. Install all prerequisites
+2. Clone the repo
    ```sh
    git clone https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject
    ```
+3. Open it in Visual Studio Code
+4. Run the `Build All` task
 
-2. TODO
+Before committing any code, run the `Prepare Sources` task.
 
 ## Issues and feature requests
 

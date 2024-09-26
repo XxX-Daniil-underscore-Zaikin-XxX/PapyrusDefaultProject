@@ -153,6 +153,7 @@ To use this template properly, you must have:
    - [ ] Rewrite [About](#about)
    - [ ] Update [Built With](#built-with), [Getting Started](#prerequisites), [Usage](#usage), [Authors](#authors--contributors), and [Acknowledgements](#acknowledgements)
    - [ ] Update logos, screenshots, and any other supplementary resources
+   - [ ] Amend the various GitHub templates (e.g. `CONTRIBUTING.md`, `SECURITY.md`, and `CODE_OF_CONDUCT.md`) as necessary. Most of the time, it shouldn't be. 
 
 
 ## Usage
