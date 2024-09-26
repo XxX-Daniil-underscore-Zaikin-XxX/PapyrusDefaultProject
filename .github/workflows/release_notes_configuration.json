@@ -1,0 +1,43 @@
+{
+    "max_tags_to_fetch": 200,
+    "max_pull_requests": 200,  
+    "max_back_track_time_days": 365,  
+    "exclude_merge_branches": [],  
+    "sort": {
+    "order": "ASC",  
+      "on_property": "mergedAt"  
+    },
+    "template": "#{{CHANGELOG}}",  
+    "pr_template": "- #{{TITLE}}\n   - PR: ##{{NUMBER}}",  
+    "empty_template": "- no changes",  
+    "categories": [
+      {
+        "title": "## 🚀 Enhancements",
+        "labels": ["enhancement"]
+      },
+      {
+        "title": "## 🐛 Fixes",
+        "labels": ["bug"]
+      },
+      {
+        "title": "## 🧠 Documentation",
+        "labels": ["documentation"]
+      },
+      {
+        "title": "## 📦 Uncategorized",
+        "labels": []
+      }
+    ],  
+    "ignore_labels": ["ignore"],  
+    "label_extractor": [],  
+    "duplicate_filter": null,  
+    "transformers": [],  
+    "tag_resolver": {
+      "method": "semver",  
+      "filter": null,  
+      "transformer": null  
+    },
+    "base_branches": [],  
+    "custom_placeholders": [],
+    "trim_values": false  
+  }
