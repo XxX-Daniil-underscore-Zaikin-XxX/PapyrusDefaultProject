@@ -66,11 +66,11 @@
 
 ## About
 
-<table style='max-width: 100%;'><tr><td>
+<table><tr><td>
 
 A modernized template for Skyrim mods, built with out-of-the-box integrations with Caprica, Pyro, VSCode, Actions, and more.
 
-Download source code made with this template, and - with the right tools - get a working mod in less than a minute. Push a commit to your repository, and it'll give back a FOMOD installer ready for sharing. Make full use of GitHub's enterprise-tier source control features, and put it to work on your chores.
+Download source code made with this template, and - with the right tools - you can get a working mod in less than a minute. Push a commit to your repository, and it'll give back a FOMOD installer ready for sharing. Make full use of GitHub's enterprise-tier source control features, and put it to work on your chores.
 
 This is modding dragged kicking and screaming into the century of the fruit bat.
 
@@ -85,10 +85,10 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
   </tr>
   <tr>
     <td style='text-align:center;'>
-        <img src="docs/images/vellum-gha.png" title="GitHub Actions runs" width="100%">
+        <img src="docs/images/vellum-gha.png" title="GitHub Actions runs" width="500">
     </td>
     <td style='text-align:center;'>
-        <img src="docs/images/vellum-releases.png" title="Automated releases" width="100%">
+        <img src="docs/images/vellum-releases.png" title="Automated releases" width="500">
     </td>
   </tr>
   <tr>
@@ -97,10 +97,10 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
   </tr>
   <tr>
     <td style='text-align:center;'>
-        <img src="docs/images/vellum-remoteimport.png" title="Pyro Remote Imports" width="100%">
+        <img src="docs/images/vellum-remoteimport.png" title="Pyro Remote Imports" width="500">
     </td>
     <td style='text-align:center;'>
-        <img src="docs/images/vellum-vscodetasks.png" title="Automated releases" width="100%">
+        <img src="docs/images/vellum-vscodetasks.png" title="Automated releases" width="500">
     </td>
   </tr>
   <tr>
@@ -109,10 +109,10 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
   </tr>
   <tr>
     <td style='text-align:center;'>
-        <img src="docs/images/vellum-automatedfomod.png" title="Pyro Remote Imports" width="100%">
+        <img src="docs/images/vellum-automatedfomod.png" title="Pyro Remote Imports" width="500">
     </td>
     <td style='text-align:center;'>
-        <img src="docs/images/vellum-spriggified.png" title="Automated releases" width="100%">
+        <img src="docs/images/vellum-spriggified.png" title="Automated releases" width="500">
     </td>
   </tr>
 </table>
