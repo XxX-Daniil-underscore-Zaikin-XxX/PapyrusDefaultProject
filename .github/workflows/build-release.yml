@@ -320,7 +320,7 @@ jobs:
 
       - name: Generate release notes
         id: release-notes
-        uses: mikepenz/release-changelog-builder-action
+        uses: mikepenz/release-changelog-builder-action@develop
         with:
           ignorePreReleases: "true"
           configuration: ".github/workflows/release_notes_configuration"

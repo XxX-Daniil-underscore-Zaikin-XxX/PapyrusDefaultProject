@@ -37,6 +37,10 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
+  - [Installing the source of a mod made using this template](#installing-the-source-of-a-mod-made-using-this-template)
+  - [Compiling your source](#compiling-your-source)
+  - [Preparing your source for a commit](#preparing-your-source-for-a-commit)
+  - [Creating a new release](#creating-a-new-release)
 - [Roadmap](#roadmap)
 - [Support](#support)
 - [Project assistance](#project-assistance)
@@ -54,14 +58,11 @@
 
 <table><tr><td>
 
-> **[?]**
-> Provide general information about your project here.
-> What problem does it (intend to) solve?
-> What is the purpose of your project?
-> Why did you undertake it?
-> You don't have to answer all the questions -- just the ones relevant to your project.
+A modernized template for Skyrim mods, built with out-of-the-box integrations with Caprica, Pyro, VSCode, Actions, and more.
 
-A modernized template for Skyrim mods, built with out-of-the-box compatibility with Caprica, Pyro, VSCode, and Actions, and more. This is modding dragged kicking and screaming into the century of the fruit bat.
+Download source code made with this template, and - with the right tools - get a working mod in less than a minute. Push a commit to your repository, and it'll give back a FOMOD installer ready for sharing. Make full use of GitHub's enterprise-tier source control features and make it do your busywork for you.
+
+This is modding dragged kicking and screaming into the century of the fruit bat.
 
 <details>
 <summary>Screenshots</summary>
@@ -85,6 +86,7 @@ A modernized template for Skyrim mods, built with out-of-the-box compatibility w
  - papyrus-lang
  - Spriggit
  - Mutagen
+ - [amazing-github-template](https://github.com/dec0dOS/amazing-github-template)
 
 ## Getting Started
 
@@ -102,7 +104,7 @@ To use this template properly, you must have:
  - The prerelease build of papyrus-lang
  - git
  - VSCode
- - dotnet script
+ - dotnet script (optional)
 
 ### Installation
 
@@ -123,6 +125,41 @@ To use this template properly, you must have:
 
 ## Usage
 
+### Installing the source of a mod made using this template
+
+1. Fork and clone the mod's repository
+2. Install the Prerequisites
+3. Run the `Build All` task
+4. Ensure that mod has been properly prepared. This will include: 
+   1. No errors in the console
+   2. All `.esp` plugins are in the root directory
+   3. `Scripts/` in root are filled with `.pex` files
+   4. All files in `dist` have been copied into root (e.g. `skse/`, `interface/`)
+
+### Compiling your source
+
+Just run `Build All`. That's it!
+
+If you must perform other build tasks, add them to `tasks.json` and put them into `Build All`'s `dependsOn`. Consider [making a Pull Request](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/compare) for your new task to this template so other people can make use of it!
+
+### Preparing your source for a commit
+
+Before you commit any code, make sure to run the `Prepare Sources` task. It's always a good idea to ensure on every commit that your code compiles and doesn't crash.
+
+### Creating a new release
+
+<!-- TODO: ADD SCREENSHOT OF THIS -->
+Automated builds let you make releases quickly and often, and it's always a good idea to make your most recent changes as accessible as possible. You can generate a release through GitHub Actions:
+
+1. In the Actions tab, select the `Build Release` workflow in the left pane
+2. Click `Run Workflow` in the workflow runs table
+3. Fill in your release version and turn on `Publish Release?`
+4. Run the workflow and wait for it to finish
+5. In the Releases section of your repository, find the newest release (it'll be a pre-release)
+6. Edit the details as required
+7. Un-check `Set as pre-release` and check `Set as latest release`
+
+Consider using [semantic versioning](https://www.gitkraken.com/gitkon/semantic-versioning-git-tags) (e.g. `v1.3.1`) to name your release versions. It's standard industry practice for many good reasons.
 
 ## Roadmap
 
@@ -134,23 +171,20 @@ See the [open issues](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/Papyru
 
 ## Support
 
-> **[?]**
-> Provide additional ways to contact the project maintainer/maintainers.
-
 Reach out to the maintainer at one of the following places:
 
 - [GitHub Discussions](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/discussions)
 - Contact options listed on [this GitHub profile](https://github.com/XxX-Daniil-underscore-Zaikin-XxX)
+- Make [a new issue](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/issues)
 
 ## Project assistance
 
 If you want to say **thank you** or/and support active development of Vellum:
 
 - Add a [GitHub Star](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject) to the project.
-- Tweet about the Vellum.
 - Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
-
-Together, we can make Vellum **better**!
+- Spread the word on Bethesda modding discords and forums
+- Use Vellum to make own mods! The more we stress-test this simple-looking template, the more robust and feature-rich we'll make it
 
 ## Contributing
 
@@ -180,6 +214,10 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-> **[?]**
-> If your work was funded by any organization or institution, acknowledge their support here.
-> In addition, if your work relies on other software libraries, or was inspired by looking at other work, it is appropriate to acknowledge this intellectual debt too.
+<!-- TODO: FORMAT LINKS -->
+<!-- TODO: ADD MORE PEOPLE -->
+
+This would not have been possible without:
+
+ - [dec0dOS](https://github.com/dec0dOS), for making an [amazing-github-template](https://github.com/dec0dOS/amazing-github-template)
+ - Noggog, for creating the inspiration of this template in the starfield build script

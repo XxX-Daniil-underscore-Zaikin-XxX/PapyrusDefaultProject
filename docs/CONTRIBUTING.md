@@ -9,6 +9,8 @@ Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in
 > Proceed to describe how to setup local development environment.
 > e.g:
 
+<!-- TODO: COPY DEV ENVIRONMENT SETUP -->
+
 To set up a development environment, please follow these steps:
 
 1. Clone the repo
@@ -39,6 +41,6 @@ Please try to create bug reports that are:
    that relate to your submission. You don't want to duplicate effort.
 2. Fork the project
 3. Create your feature branch (`git checkout -b feat/amazing_feature`)
-4. Commit your changes (`git commit -m 'feat: add amazing_feature'`) Vellum uses [conventional commits](https://www.conventionalcommits.org), so please follow the specification in your commit messages.
+4. Commit your changes (`git commit -m 'feat: add amazing_feature'`). Vellum now uses [conventional commits](https://www.conventionalcommits.org), so please follow the specification in your commit messages.
 5. Push to the branch (`git push origin feat/amazing_feature`)
 6. [Open a Pull Request](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/compare?expand=1)
