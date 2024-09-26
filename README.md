@@ -78,7 +78,7 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 <summary>Screenshots</summary>
 <br>
 
-<table width=100% style='table-layout:fixed;'>
+<table style='table-layout:fixed;'>
   <tr>
     <th style='text-align:center;'> GitHub Actions </th>
     <th style='text-align:center;'> Automated Releases </th>
