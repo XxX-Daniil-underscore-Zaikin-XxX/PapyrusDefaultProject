@@ -16,15 +16,26 @@
   <a href="https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
   ·
   <a href="https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/discussions">Ask a Question</a>
+  ·
+  <a href="https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/wiki">Read the Wiki</a>
 </div>
 
 <div align="center">
 <br />
 
-[![Project license](https://img.shields.io/github/license/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject.svg?style=flat-square)](LICENSE)
+[![Project license](https://img.shields.io/github/license/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject.svg?style=flat)](LICENSE)
+![Languages](https://img.shields.io/badge/languages-Papyrus%2C_C%23-blue)
+[![GitHub Release](https://img.shields.io/github/v/release/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/releases)
 
-[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
-[![code with love by XxX-Daniil-underscore-Zaikin-XxX](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20-ff1414.svg?style=flat-square)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX)
+[![Build status](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/actions/workflows/build-release.yml/badge.svg?event=push)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/actions?query=branch%3Amain)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject?style=flat&label=commits)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/commits/main)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/total)
+[![GitHub Release Date](https://img.shields.io/github/release-date/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject?display_date=published_at&label=latest%20release)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/releases)
+
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with love by XxX-Daniil-underscore-Zaikin-XxX](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20-ff1414.svg?style=flat)](https://github.com/XxX-Daniil-underscore-Zaikin-XxX)
+
+
 
 </div>
 
@@ -60,7 +71,7 @@
 
 A modernized template for Skyrim mods, built with out-of-the-box integrations with Caprica, Pyro, VSCode, Actions, and more.
 
-Download source code made with this template, and - with the right tools - get a working mod in less than a minute. Push a commit to your repository, and it'll give back a FOMOD installer ready for sharing. Make full use of GitHub's enterprise-tier source control features and make it do your busywork for you.
+Download source code made with this template, and - with the right tools - get a working mod in less than a minute. Push a commit to your repository, and it'll give back a FOMOD installer ready for sharing. Make full use of GitHub's enterprise-tier source control features, and put it to work on your chores.
 
 This is modding dragged kicking and screaming into the century of the fruit bat.
 
@@ -92,7 +103,7 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 
 ### Prerequisites
 
-> [!NOTE]
+> [!TIP]
 > For more information, check out [the wiki page on dependencies](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/wiki/Tools-and-Dependencies).
 
 
@@ -108,20 +119,35 @@ To use this template properly, you must have:
 
 ### Installation
 
-> [!NOTE]
+> [!TIP]
 > For more details, please see the [wiki page on installation](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/PapyrusDefaultProject/wiki/Setting-up-your-project).
 
-1. Install all tools and dependencies
-2. [Use Vellum](https://github.com/new?template_name=PapyrusDefaultProject&template_owner=XxX-Daniil-underscore-Zaikin-XxX) as a template to create your own repository
-3. Delete sample project files
-4. Add your GitHub secrets token to Pyro
-5. Change `settings.json`
-6. Update this README with your own repository's information
-7. Enable GitHub Actions (mandatory) and GitHub Discussions (optional)
-8. (Optional) Disable Mutagen scripts
-9. Adjust FOMOD to properly include your `.esp`s and nothing else
-10. Adjust build script constants and FOMOD creation step
-11. Edit .gitignore
+- [ ] Install all tools and dependencies
+- [ ] [Use Vellum](https://github.com/new?template_name=PapyrusDefaultProject&template_owner=XxX-Daniil-underscore-Zaikin-XxX) as a template to create your own GitHub Repository.
+- [ ] Clone it
+- [ ] Delete sample project files
+- [ ] Add your GitHub secrets token to Pyro
+- [ ] Change `settings.json`
+- [ ] Enable GitHub Actions (mandatory) and GitHub Discussions (optional)
+- [ ] (Optional) Disable Mutagen scripts
+- [ ] Update FOMOD's `info.xml` and `ModuleConfig.xml` with your project's details
+- [ ] Adjust FOMOD to properly include your `.esp`s and nothing else
+- [ ] Adjust build script constants and FOMOD creation step
+- [ ] Edit .gitignore
+> [!NOTE]
+> You don't necessarily have to follow the below steps to craft your documentation. You can radically adjust this template as you see fit, or simply remake it from scratch.
+>
+> You may find it helpful to look at [this curated list of cool READMEs](https://github.com/matiassingers/awesome-readme), [this amazing template generator](https://github.com/dec0dOS/amazing-github-template), and [this video about designing a good README](https://www.youtube.com/watch?v=vfZuFo1gTB8&list=PLA9_Hq3zhoFw6patag2gZcDjpugDLBStL&index=33).
+- [ ] Update documentation
+   - [ ] Change all repository URLs. You should search and replace the whole repository, not just the README
+   - [ ] Change my name and GH profile
+   - [ ] Change Vellum to your project's name
+   - [ ] Change screenshots and images to correspond to your mod
+   - [ ] Add links to your socials and mod pages (e.g. Twitter, Nexus, Discord)
+   - [ ] Rewrite [About](#about)
+   - [ ] Update [Built With](#built-with), [Getting Started](#prerequisites), [Usage](#usage), [Authors](#authors--contributors), and [Acknowledgements](#acknowledgements)
+   - [ ] Update logos, screenshots, and any other supplementary resources
+
 
 ## Usage
 
@@ -147,7 +173,8 @@ If you must perform other build tasks, add them to `tasks.json` and put them int
 Before you commit any code, make sure to run the `Prepare Sources` task. It's always a good idea to ensure on every commit that your code compiles and doesn't crash.
 
 ### Creating a new release
-
+> [!IMPORTANT]
+> Consider using [semantic versioning](https://www.gitkraken.com/gitkon/semantic-versioning-git-tags) (e.g. `v1.3.1`) to name your release versions. It's standard industry practice for many good reasons.
 <!-- TODO: ADD SCREENSHOT OF THIS -->
 Automated builds let you make releases quickly and often, and it's always a good idea to make your most recent changes as accessible as possible. You can generate a release through GitHub Actions:
 
@@ -158,8 +185,6 @@ Automated builds let you make releases quickly and often, and it's always a good
 5. In the Releases section of your repository, find the newest release (it'll be a pre-release)
 6. Edit the details as required
 7. Un-check `Set as pre-release` and check `Set as latest release`
-
-Consider using [semantic versioning](https://www.gitkraken.com/gitkon/semantic-versioning-git-tags) (e.g. `v1.3.1`) to name your release versions. It's standard industry practice for many good reasons.
 
 ## Roadmap
 
