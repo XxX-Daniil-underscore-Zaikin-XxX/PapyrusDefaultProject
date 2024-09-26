@@ -70,6 +70,10 @@
   color: e4ea8a
   description: "Nice addition, maybe... someday..."
 
+- name: "blocked"
+  color: e534eb
+  description: "Awaiting resolution in another issue, PR, or codebase"
+
 - name: "major"
   color: b60205
   description: "This PR causes a major bump in the version number."
