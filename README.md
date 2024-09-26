@@ -66,7 +66,7 @@
 
 ## About
 
-<table><tr><td>
+<table style='max-width: 100%;'><tr><td>
 
 A modernized template for Skyrim mods, built with out-of-the-box integrations with Caprica, Pyro, VSCode, Actions, and more.
 
