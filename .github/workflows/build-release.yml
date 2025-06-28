@@ -46,7 +46,6 @@ jobs:
       release-name: ${{ steps.set-release.outputs.rel-name }}
       trimmed-release-name: ${{ steps.set-trimmed-release.outputs.trim-rel-name }}
     steps:
-
       - uses: actions/checkout@v4
 
       - name: Get Date
@@ -94,6 +93,7 @@ jobs:
         id: should_run_weekly
         shell: bash
         run: echo "should_run=true" >> "$GITHUB_OUTPUT"
+        
   build-plugin:
     name: Build ESP from Spriggit files
     needs: check-changes
@@ -151,6 +151,7 @@ jobs:
         with:
             name: plugin
             path: ${{ github.workspace }}/to-pack/*
+            
   compile-scripts:
     name: Compile Papyrus scripts
     needs: check-changes
@@ -189,18 +190,18 @@ jobs:
         - name: Fetch Caprica Prerelease
           if: steps.cache-com.outputs.cache-hit != 'true'
           shell: bash
-          run: gh run download 10848769493 -R Orvid/Caprica
+          run: |
+            gh release download -p "Caprica*" -R XxX-Daniil-underscore-Zaikin-XxX/Caprica
+            unzip Caprica* -d Caprica
           env:
             GH_TOKEN: ${{ github.token }}
 
         - name: Fetch latest Pyro
           if: steps.cache-pyro.outputs.cache-hit != 'true'
           shell: bash
-          # temporarily download Pyro from run instead of release
           run: |
-            gh run download 10850094629 -R XxX-Daniil-underscore-Zaikin-XxX/pyro
-            mv pyro* Pyro
-            ls -aR
+            gh release download -p "pyro*" -R XxX-Daniil-underscore-Zaikin-XxX/pyro
+            unzip pyro* -d Pyro
           env:
             GH_TOKEN: ${{ github.token }}
 
@@ -208,7 +209,7 @@ jobs:
           shell: bash
           run: |
             mkdir -p "dummyGame/${{ env.GAME }}"
-            Pyro/pyro.exe --compiler-path "${{ github.workspace}}/.github/Caprica/Caprica.exe" --access-token ${{ github.token }} --game-path "${{ github.workspace}}/dummyGame/${{ env.GAME }}" "${{ github.workspace}}/Source/Scripts/skyrimse.ppj"
+            Pyro/pyro.exe --compiler-path "${{ github.workspace }}/.github/Caprica/Caprica.exe" --access-token ${{ github.token }} --game-path "${{ github.workspace }}/dummyGame/${{ env.GAME }}" "${{ github.workspace }}/Source/Scripts/skyrimse.ppj"
 
         - name: Upload Output
           uses: actions/upload-artifact@v4
@@ -216,6 +217,7 @@ jobs:
             name: compiled-scripts
             path: |
               Scripts/
+          
   package-mod:
     name: Package all necessary files
     runs-on: ubuntu-latest
@@ -346,6 +348,7 @@ jobs:
           artifacts: ${{ env.TRIMMED_VERSION }}.zip
 
       - name: Remove temporary artifacts
-        uses: geekyeggo/delete-artifact@v2
+        uses: geekyeggo/delete-artifact@v5
         with:
           name: ${{ env.TRIMMED_VERSION }}
+          failOnError: false
