@@ -93,62 +93,60 @@ jobs:
         id: should_run_weekly
         shell: bash
         run: echo "should_run=true" >> "$GITHUB_OUTPUT"
-        
+    
+
   build-plugin:
     name: Build ESP from Spriggit files
     needs: check-changes
-    if: ${{ needs.check-changes.outputs.should_run >= 1 || (github.event_name == 'workflow_dispatch' && always()) }}
+    if: ${{ needs.check-changes.outputs.should_run >= 1 || github.event_name == 'workflow_dispatch' && always() }}
     permissions: write-all
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Output Inputs
         run: |
-          echo "GitHub Event Inputs: ${{ toJSON(github.event.inputs) }}"
-          echo "Inputs: ${{ toJSON(inputs) }}"
-
+            echo "GitHub Event Inputs: ${{ toJSON(github.event.inputs) }}"
+            echo "Inputs: ${{ toJSON(inputs) }}"
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copy to Pack Folder
-        shell: bash
-        run: mkdir ${{ github.workspace }}/to-pack
+      - name: Create Pack Folder
+        run: mkdir -p $env:GITHUB_WORKSPACE\\to-pack
+        shell: pwsh
 
       - name: Cache Spriggit
         id: cache-spriggit
         uses: actions/cache@v4
         with:
-          path: |
-            .github/spriggit
-          key: ${{ runner.os }}-spriggit
-      
-      - name: Fetch spriggit
+          path: .github/spriggit
+          key: ${{ runner.os }}-spriggit-${{ inputs.spriggit_tool_version }}
+
+      - name: Fetch Spriggit
         if: steps.cache-spriggit.outputs.cache-hit != 'true'
-        shell: bash
-        run: gh release download -O .github/spriggit.zip -p 'SpriggitLinuxCLI.zip' -R Mutagen-Modding/Spriggit ${{ inputs.spriggit_tool_version }}
         env:
-          GH_TOKEN: ${{ github.token }}
-          
-      - name: Extract Spriggit Zip
-        if: steps.cache-spriggit.outputs.cache-hit != 'true'
-        shell: bash
-        run: 7z x .github/spriggit.zip -o.github/spriggit
-
-      - name: Fix spriggit permission
-        shell: bash
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          chmod -R 777 .github/spriggit
-          chmod -R 777 /tmp
+          gh release download -R Mutagen-Modding/Spriggit --pattern "SpriggitCLI.zip" --dir .github
 
-      - name: Run spriggit
-        shell: bash
+          7z x .github/SpriggitCLI.zip -o".github/spriggit/"
+
+          if (Test-Path ".github/spriggit/Spriggit.CLI.exe") {
+              Write-Host "Spriggit.CLI.exe found and ready."
+          } else {
+              Write-Error "Spriggit.CLI.exe not found! Exiting."
+              exit 1
+          }
+        shell: pwsh
+
+      - name: Run Spriggit
         run: |
           esps=${{ env.ESP_NAMES }}
-          for esp in ${esps[@]}
-          do
-            .github/spriggit/Spriggit.CLI deserialize --InputPath "$esp" --OutputPath "${{ github.workspace }}/to-pack/$esp.esp"
-          done
+          foreach ($esp in $esps)
+          {
+            .github\spriggit\Spriggit.CLI deserialize --InputPath "$esp" --OutputPath "${{ github.workspace }}\to-pack\$esp.esp"
+          }
+        shell: pwsh
 
-      - name: Upload plugin
+      - name: Upload plugins
         uses: actions/upload-artifact@v4
         with:
             name: plugin
