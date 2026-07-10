@@ -135,7 +135,9 @@ jobs:
 
       - name: Fix spriggit permission
         shell: bash
-        run: chmod -R 777 .github/spriggit
+        run: |
+          chmod -R 777 .github/spriggit
+          chmod -R 777 /tmp
 
       - name: Run spriggit
         shell: bash
