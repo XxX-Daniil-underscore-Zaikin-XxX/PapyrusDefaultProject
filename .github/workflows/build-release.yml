@@ -29,8 +29,7 @@ on:
 
 env:
   # If you must compile more .esp files, add them in the following format
-  ESP_NAMES: ("HelloWorldMod" "HelloWorldModPatch")
-  ESP_NAMES_TEST: |
+  ESP_NAMES: |
     (
     "HelloWorldMod"
     "HelloWorldModPatch"
@@ -144,7 +143,7 @@ jobs:
 
       - name: Run Spriggit
         run: |
-          $esps = @${{ env.ESP_NAMES_TEST }}
+          $esps = @${{ env.ESP_NAMES }}
           $esps | ForEach-Object {.github\spriggit\Spriggit.CLI deserialize --InputPath "$_" --OutputPath "${{ github.workspace }}\to-pack\$_.esp"}
         shell: pwsh
 
@@ -245,7 +244,7 @@ jobs:
       - name: Create packing structure
         shell: bash
         run: |
-          esps=${{ env.ESP_NAMES_TEST }}
+          esps=${{ env.ESP_NAMES }}
           mkdir "${{ github.workspace }}/to-pack"
           mkdir "${{ github.workspace }}/to-pack/000 Required - Core Files"
           mkdir "${{ github.workspace }}/to-pack/100 Optional - Example Patch"
