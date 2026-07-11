@@ -142,9 +142,9 @@ This is modding dragged kicking and screaming into the century of the fruit bat.
 
 
 To use this template properly, you must have:
- - The [prerelease build](https://github.com/Orvid/Caprica/actions/runs/10979332233/artifacts/1962822238) of [Caprica](https://github.com/Orvid/Caprica)
- - The [prerelease build](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/papyrus-lang/releases/tag/temp-release) of the [VSCode Papyrus extension](https://github.com/joelday/papyrus-lang)
- - The [prerelease build](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/pyro/actions/runs/10973209974/artifacts/1961711654) of [Pyro](https://github.com/fireundubh/pyro) to replace the one in the extension's directory
+ - The [prerelease build](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/Caprica/releases/tag/v0.0.0) of [Caprica](https://github.com/Orvid/Caprica)
+ - The [latest version](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) of the [VSCode Papyrus extension](https://github.com/joelday/papyrus-lang)
+ - The [prerelease build](https://github.com/XxX-Daniil-underscore-Zaikin-XxX/pyro/releases/tag/v0.0.1) of [Pyro](https://github.com/fireundubh/pyro) to replace the one in the extension's directory
  - A GitHub account and a [git installation](https://git-scm.com/downloads)
  - The [latest build](https://github.com/Mutagen-Modding/Spriggit/releases) of [Spriggit](https://github.com/Mutagen-Modding/Spriggit)
  - [Visual Studio Code](https://code.visualstudio.com/) and some basic extensions
