@@ -142,11 +142,7 @@ jobs:
 
       - name: Run Spriggit
         run: |
-          $esps=@("HelloWorldMod", "HelloWorldModPatch")
-          foreach ($esp in ${{ env.ESP_NAMES_TEST }})
-          {
-            .github\spriggit\Spriggit.CLI deserialize --InputPath "$esp" --OutputPath "${{ github.workspace }}\to-pack\$esp.esp"
-          }
+          ${{ env.ESP_NAMES_TEST }} | ForEach-Object {.github\spriggit\Spriggit.CLI deserialize --InputPath "$_" --OutputPath "${{ github.workspace }}\to-pack\$_.esp"}
         shell: pwsh
 
       - name: Upload plugins
