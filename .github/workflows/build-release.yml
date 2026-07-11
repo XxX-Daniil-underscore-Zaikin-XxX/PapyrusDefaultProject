@@ -139,7 +139,7 @@ jobs:
 
       - name: Run Spriggit
         run: |
-          esps=${{ env.ESP_NAMES }}
+          esps='HelloWorldMod', 'HelloWorldModPatch'
           foreach ($esp in $esps)
           {
             .github\spriggit\Spriggit.CLI deserialize --InputPath "$esp" --OutputPath "${{ github.workspace }}\to-pack\$esp.esp"
