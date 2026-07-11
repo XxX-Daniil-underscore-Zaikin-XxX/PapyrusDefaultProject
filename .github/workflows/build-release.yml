@@ -30,6 +30,9 @@ on:
 env:
   # If you must compile more .esp files, add them in the following format
   ESP_NAMES: ("HelloWorldMod" "HelloWorldModPatch")
+  ESP_NAMES_TEST: |
+    HelloWorldMod
+    HelloWorldModPatch
   # The name of the game you're making the mod for - identical to the game's folder
   GAME: "Skyrim Special Edition"
   PROJECT_NAME: MyCoolProject
@@ -140,7 +143,7 @@ jobs:
       - name: Run Spriggit
         run: |
           $esps=@("HelloWorldMod", "HelloWorldModPatch")
-          foreach ($esp in $esps)
+          foreach ($esp in ${{ env.ESP_NAMES_TEST }})
           {
             .github\spriggit\Spriggit.CLI deserialize --InputPath "$esp" --OutputPath "${{ github.workspace }}\to-pack\$esp.esp"
           }
