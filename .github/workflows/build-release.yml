@@ -30,9 +30,7 @@ on:
 env:
   # If you must compile more .esp files, add them in the following format
   ESP_NAMES: ("HelloWorldMod" "HelloWorldModPatch")
-  ESP_NAMES_TEST: |
-    HelloWorldMod
-    HelloWorldModPatch
+  ESP_NAMES_TEST: HelloWorldMod\nHelloWorldModPatch
   # The name of the game you're making the mod for - identical to the game's folder
   GAME: "Skyrim Special Edition"
   PROJECT_NAME: MyCoolProject
